@@ -23,14 +23,12 @@ function App() {
   return (
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
-      <h1>Log In | Sign Up</h1>
-
+      <LoginForm />
       <ClassesList />
 
       <Route path='/login' component={LoginForm}/>
       <Route path= '/signup' component={SignUpForm} />
       <Route path='/about' component={AboutUs}/>
-
 
     </div>
   );
