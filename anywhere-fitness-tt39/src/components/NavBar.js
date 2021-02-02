@@ -44,6 +44,9 @@ const NavBar = ({ loggedIn, logout }) => {
             <li>Log Out</li>
             </Link>
           }
+          <Link to='/about'>
+            <li>About Us</li>
+          </Link>
 
         </ul>
       </nav>

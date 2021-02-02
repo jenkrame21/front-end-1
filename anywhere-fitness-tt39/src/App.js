@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route, Link, Switch, useHistory } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
+import AboutUs from './components/AboutUs';
 import './App.css';
 
 
@@ -21,7 +22,10 @@ function App() {
       <NavBar loggedIn={loggedIn} logout={logout}/>
       <h1>Anywhere Fitness</h1>
 
-    <Route />
+      <Route path='/login'/>
+      <Route path= '/signup' />
+      <Route path='/about' component={AboutUs}/>
+
 
     </div>
   );
