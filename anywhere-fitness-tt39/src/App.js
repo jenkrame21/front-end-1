@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Link, Switch, useHistory } from 'react-router-dom';
-import PrivateRoute from './components/PrivateRoute';
+// import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
 import './App.css';
@@ -11,8 +11,6 @@ import LoginForm from './components/LoginForm'
 
 function App() {
 
-  
-
   const [loggedIn, setLoggedIn] = useState(window.localStorage.getItem('token'));
   const { push } = useHistory();
 
@@ -20,14 +18,12 @@ function App() {
     window.localStorage.removeItem('token')
     setLoggedIn(false)
     push('/')
-  }
-
-
+  };
 
   return (
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
-      <h1>Anywhere Fitness</h1>
+      <h1>Log In | Sign Up</h1>
 
       <ClassesList />
 
