@@ -15,7 +15,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    console.log("Inside reducer!", action);
     switch (action.type) {
         case START_GET_CLASSES_CALL:
             return {
