@@ -23,7 +23,6 @@ function App() {
   return (
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
-      <LoginForm />
       <ClassesList />
 
       <Route path='/login' component={LoginForm}/>

@@ -52,6 +52,7 @@ export const postSignup = (signup) => (dispatch) => {
 
 // Getting classes action:
 export const getClasses = () => (dispatch) => {
+    console.log("This is GetClasses!")
     dispatch({ type: START_GET_CLASSES_CALL });
 
     axiosWithAuth()

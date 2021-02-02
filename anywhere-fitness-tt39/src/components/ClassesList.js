@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import Class from './Class';
 
 const ClassesList = (props) => {
+    const { getClasses } = props
     
     useEffect(() => {
         getClasses();
-    }, []);
+    }, [getClasses]);
 
     if(props.error) {
         return <h2>{props.error}</h2>
