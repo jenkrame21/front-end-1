@@ -15,6 +15,16 @@ export const START_ADDING_CLASS = "START_ADDING_CLASS";
 export const ADD_CLASS_SUCCESS = "ADD_CLASS_SUCCESS";
 export const ADD_CLASS_FAILURE = "ADD_CLASS_FAILURE";
 
+// Update Class Call
+export const START_UPDATE_CLASS_CALL = "START_UPDATE_CLASS_CALL";
+export const UPDATE_CLASS_SUCCESS = "UPDATE_CLASS_SUCCESS";
+export const UPDATE_CLASS_FAILURE = "UPDATE_CLASS_FAILURE";
+
+// Delete Class Call
+export const START_DELETE_CLASS_CALL = "START_DELETE_CLASS_CALL";
+export const DELETE_CLASS_SUCCESS = "DELETE_CLASS_SUCCESS";
+export const DELETE_CLASS_FAILURE = "DELETE_CLASS_FAILURE";
+
 // Login action:
 export const postLogin = (login) => (dispatch) => {
     dispatch({ type: START_USER_CALL });
@@ -50,7 +60,7 @@ export const postSignup = (signup) => (dispatch) => {
         });
 };
 
-// Getting classes action:
+// Get classes action:
 export const getClasses = () => (dispatch) => {
     dispatch({ type: START_GET_CLASSES_CALL });
 
@@ -66,7 +76,7 @@ export const getClasses = () => (dispatch) => {
         });
 };
 
-// Posting new class action:
+// Post new class action:
 export const postClass = (newClass) => (dispatch) => {
     dispatch({ type: START_ADDING_CLASS });
 
@@ -83,24 +93,34 @@ export const postClass = (newClass) => (dispatch) => {
 };
 
 // Update class action:
-export const updateClass = () => (dispatch) => {
-    dispatch({ type: "UPDATE_CLASS" })
+export const updateClass = (id) => (dispatch) => {
+    dispatch({ type: START_UPDATE_CLASS_CALL })
 
     axiosWithAuth()
-        .put('')
+        .put(`/classes/${id}`)
+        .then((res) => {
+            console.log("Update Class Success: ", res.data);
+            dispatch({ type: UPDATE_CLASS_SUCCESS, payload: res.data });
+        })
+        .catch((err) => {
+            console.log("Update Class Failure: ", err.message);
+            dispatch({ type: UPDATE_CLASS_FAILURE, payload: err.message });
+        })
 };
 
 // Delete class action:
 export const deleteClass = (id) => (dispatch) => {
-    dispatch({ type: "DELETE_CLASS" });
+    dispatch({ type: START_DELETE_CLASS_CALL });
 
     // Add axios
     axiosWithAuth()
         .delete(`/classes/${id}`)
         .then((res) => {
             console.log("Delete Class Success: ", res.data);
+            dispatch({ type: DELETE_CLASS_SUCCESS })
         })
         .catch((err) => {
             console.log("Delete Class Failure: ", err.message);
+            dispatch({ type: DELETE_CLASS_FAILURE })
         });
 };

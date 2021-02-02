@@ -4,7 +4,13 @@ import {
     GET_CLASSES_FAILURE,
     START_ADDING_CLASS,
     ADD_CLASS_SUCCESS,
-    ADD_CLASS_FAILURE
+    ADD_CLASS_FAILURE,
+    START_UPDATE_CLASS_CALL,
+    UPDATE_CLASS_SUCCESS,
+    UPDATE_CLASS_FAILURE,
+    START_DELETE_CLASS_CALL,
+    DELETE_CLASS_SUCCESS,
+    DELETE_CLASS_FAILURE
 } from '../actions/index';
 
 const initialState = {
@@ -53,10 +59,48 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 addingError: action.payload
             }
-        // case DELETE_CLASS:
-        //     return {
-        //         ...state
-        //     }
+        case START_UPDATE_CLASS_CALL:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes
+                ]
+            }
+        case UPDATE_CLASS_SUCCESS:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes
+                ]
+            }
+        case UPDATE_CLASS_FAILURE:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes
+                ]
+            }
+        case START_DELETE_CLASS_CALL:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes
+                ]
+            }
+        case DELETE_CLASS_SUCCESS:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes
+                ]
+            }
+        case DELETE_CLASS_FAILURE:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes
+                ]
+            }
         default:
             return state
     };
