@@ -4,9 +4,13 @@ import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
 import './App.css';
+import SignUpForm from './components/SignUpForm'
 
 
 function App() {
+
+  
+
   const [loggedIn, setLoggedIn] = useState(window.localStorage.getItem('token'));
   const { push } = useHistory();
 
@@ -17,13 +21,13 @@ function App() {
   }
 
 
+
   return (
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
       <h1>Anywhere Fitness</h1>
-
       <Route path='/login'/>
-      <Route path= '/signup' />
+      <Route path= '/signup' component={SignUpForm} />
       <Route path='/about' component={AboutUs}/>
 
 
