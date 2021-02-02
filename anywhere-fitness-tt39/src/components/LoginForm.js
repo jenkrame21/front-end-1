@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/loginFormSchema'
+import { connect } from 'react-redux';
+import { postLogin } from '../actions/index';
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -68,9 +70,9 @@ const defaultErrors = {
   password: '',
 }
 
-export default function LoginForm(props) {
+function LoginForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
-  const [users, setUsers] = useState([])
+  // const [users, setUsers] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
@@ -97,17 +99,18 @@ export default function LoginForm(props) {
   }
 
   const postNewUser = (newUser) => {
-    axios
-      .post('https://reqres.in/api/users', newUser)
-      .then((res) => {
-        setUsers([res.data, ...users])
-        setFormValues(initialValues)
-        debugger
-      })
-      .catch((err) => {
-        console.error(err)
-        debugger
-      })
+    // axios
+    //   .post('https://reqres.in/api/users', newUser)
+    //   .then((res) => {
+    //     setUsers([res.data, ...users])
+    //     setFormValues(initialValues)
+    //     debugger
+    //   })
+    //   .catch((err) => {
+    //     console.error(err)
+    //     debugger
+    //   })
+    props.postLogin(newUser)
   }
 
   const onSubmit = (evt) => {
@@ -155,3 +158,5 @@ export default function LoginForm(props) {
     </StyledDiv>
   )
 }
+
+export default connect(null, { postLogin })(LoginForm);
