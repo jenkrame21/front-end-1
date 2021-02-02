@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
 import './App.css';
 import SignUpForm from './components/SignUpForm'
-
+import LoginForm from './components/LoginForm'
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
       <h1>Anywhere Fitness</h1>
-      <Route path='/login'/>
+      <Route path='/login' component={LoginForm}/>
       <Route path= '/signup' component={SignUpForm} />
       <Route path='/about' component={AboutUs}/>
 

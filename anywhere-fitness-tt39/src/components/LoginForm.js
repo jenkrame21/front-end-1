@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
-import schema from '../validation/signUpFormSchema'
+import schema from '../validation/loginFormSchema'
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -30,16 +30,15 @@ const StyledForm = styled.form`
   padding: 2%;
   input {
     margin: 1.5% 0 1.5%;
-    &::selection{
-    color:deepskyblue;
+    &::selection {
+      color: deepskyblue;
+    }
   }
+  label {
+    &::selection {
+      color: deepskyblue;
+    }
   }
-  label{
-    &::selection{
-    color:deepskyblue;
-  }
-  }
-
 `
 
 const StyledBtn = styled.button`
@@ -53,28 +52,22 @@ const StyledBtn = styled.button`
     color: whitesmoke;
     background-color: lightcoral;
   }
-  &::selection{
-    color:deepskyblue;
+  &::selection {
+    color: deepskyblue;
   }
 `
 
 const initialValues = {
-  name: '',
-  email: '',
   username: '',
   password: '',
-  role: '',
 }
 
 const defaultErrors = {
-  name: '',
-  email: '',
   username: '',
   password: '',
-  role: '',
 }
 
-export default function SignUpForm(props) {
+export default function LoginForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
   const [users, setUsers] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
@@ -119,11 +112,8 @@ export default function SignUpForm(props) {
   const onSubmit = (evt) => {
     evt.preventDefault()
     const newUser = {
-      name: formValues.name.trim(),
-      email: formValues.email.trim(),
       username: formValues.username.trim(),
       password: formValues.password.trim(),
-      role: formValues.role.trim(),
     }
     postNewUser(newUser)
   }
@@ -133,37 +123,13 @@ export default function SignUpForm(props) {
       setButtonDisabled(!valid)
     })
   }, [formValues])
-
   return (
     <StyledDiv>
       <StyledErr>
-        <div>{errors.name}</div>
-        <div>{errors.email}</div>
         <div>{errors.username}</div>
         <div>{errors.password}</div>
-        <div>{errors.role}</div>
       </StyledErr>
       <StyledForm onSubmit={onSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={formValues.name}
-            onChange={onChange}
-            placeholder="Full Name"
-          />
-        </label>
-        <label htmlFor="email">
-          E-mail:
-          <input
-            type="email"
-            name="email"
-            value={formValues.email}
-            onChange={onChange}
-            placeholder="example@email.com"
-          />
-        </label>
         <label htmlFor="username">
           Username:
           <input
@@ -180,27 +146,6 @@ export default function SignUpForm(props) {
             type="password"
             name="password"
             value={formValues.password}
-            onChange={onChange}
-          />
-        </label>
-        <label>
-          User
-          <input
-            type="radio"
-            name="role"
-            value="User"
-            checked={formValues.role === 'User'}
-            onChange={onChange}
-          />
-        </label>
-
-        <label>
-          Instructor
-          <input
-            type="radio"
-            name="role"
-            value="Instructor"
-            checked={formValues.role === 'Instructor'}
             onChange={onChange}
           />
         </label>
