@@ -52,13 +52,12 @@ export const postSignup = (signup) => (dispatch) => {
 
 // Getting classes action:
 export const getClasses = () => (dispatch) => {
-    console.log("This is GetClasses!")
     dispatch({ type: START_GET_CLASSES_CALL });
 
     axiosWithAuth()
         .get('/classes')
         .then((res) => {
-            console.log("Get Classes Action Success: ", res);
+            // console.log("Get Classes Action Success: ", res);
             dispatch({ type: GET_CLASSES_SUCCESS, payload: res.data });
         })
         .catch((err) => {
