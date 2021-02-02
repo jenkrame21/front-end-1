@@ -1,4 +1,10 @@
 import {
+    START_POST_LOGIN_CALL,
+    POST_LOGIN_SUCCESS,
+    POST_LOGIN_FAILURE,
+    START_POST_SIGNUP_CALL,
+    POST_SIGNUP_SUCCESS,
+    POST_SIGNUP_FAILURE,
     START_GET_CLASSES_CALL,
     GET_CLASSES_SUCCESS,
     GET_CLASSES_FAILURE,
@@ -16,6 +22,35 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case START_POST_LOGIN_CALL:
+            return {
+                ...state,
+                isLoading: true,
+                addingError: ''
+            }
+            //FIX BELOW
+        case POST_LOGIN_SUCCESS:
+            return {
+
+            }
+        case POST_LOGIN_FAILURE:
+            return {
+
+            }
+        case START_POST_SIGNUP_CALL:
+            return {
+                ...state,
+                isLoading: true,
+                addingError: ''                
+            }
+        case POST_SIGNUP_SUCCESS:
+            return {
+
+            }
+        case POST_SIGNUP_FAILURE:
+            return {
+
+            }
         case START_GET_CLASSES_CALL:
             return {
                 ...state,
