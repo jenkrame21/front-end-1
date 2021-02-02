@@ -6,6 +6,7 @@ import AboutUs from './components/AboutUs';
 import './App.css';
 import SignUpForm from './components/SignUpForm'
 import LoginForm from './components/LoginForm'
+import AddClassForm from './components/AddClassForm'
 
 function App() {
 
@@ -29,7 +30,6 @@ function App() {
       <Route path='/login' component={LoginForm}/>
       <Route path= '/signup' component={SignUpForm} />
       <Route path='/about' component={AboutUs}/>
-
 
     </div>
   );

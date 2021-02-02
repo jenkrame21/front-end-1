@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
-import schema from '../validation/signUpFormSchema'
+import schema from '../validation/addClassFormSchema'
+
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -30,18 +31,16 @@ const StyledForm = styled.form`
   padding: 2%;
   input {
     margin: 1.5% 0 1.5%;
-    &::selection{
-    color:deepskyblue;
+    &::selection {
+      color: deepskyblue;
+    }
   }
+  label {
+    &::selection {
+      color: deepskyblue;
+    }
   }
-  label{
-    &::selection{
-    color:deepskyblue;
-  }
-  }
-
 `
-
 const StyledBtn = styled.button`
   padding: 0 5% 0;
   background-color: white;
@@ -54,30 +53,38 @@ const StyledBtn = styled.button`
     color: whitesmoke;
     background-color: lightcoral;
   }
-  &::selection{
-    color:deepskyblue;
+  &::selection {
+    color: deepskyblue;
   }
 `
 
 const initialValues = {
   name: '',
-  email: '',
-  username: '',
-  password: '',
-  role: '',
+  type: '',
+  start_time: '',
+  date: '',
+  duration: '',
+  intensity_level: '',
+  location: '',
+  attendees: '',
+  max_size: '',
 }
 
 const defaultErrors = {
   name: '',
-  email: '',
-  username: '',
-  password: '',
-  role: '',
+  type: '',
+  start_time: '',
+  date: '',
+  duration: '',
+  intensity_level: '',
+  location: '',
+  attendees: '',
+  max_size: '',
 }
 
-export default function SignUpForm(props) {
+export default function AddClassForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
-  const [users, setUsers] = useState([])
+  const [classes, setClasses] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
@@ -103,13 +110,12 @@ export default function SignUpForm(props) {
     })
   }
 
-  const postNewUser = (newUser) => {
+  const postNewClass = (newClass) => {
     axios
-      .post('https://reqres.in/api/users', newUser)
+      .post('https://reqres.in/api/users', newClass)
       .then((res) => {
-        setUsers([res.data, ...users])
+        setClasses([res.data, ...classes])
         setFormValues(initialValues)
-        debugger
       })
       .catch((err) => {
         console.error(err)
@@ -119,30 +125,36 @@ export default function SignUpForm(props) {
 
   const onSubmit = (evt) => {
     evt.preventDefault()
-    const newUser = {
+    const newClass = {
       name: formValues.name.trim(),
-      email: formValues.email.trim(),
-      username: formValues.username.trim(),
-      password: formValues.password.trim(),
-      role: formValues.role.trim(),
+      type: formValues.type.trim(),
+      start_time: formValues.start_time.trim(),
+      date: formValues.date.trim(),
+      duration: formValues.duration.trim(),
+      intensity_level: formValues.intensity_level.trim(),
+      location: formValues.location.trim(),
+      attendees: formValues.attendees.trim(),
+      max_size: formValues.max_size.trim(),
     }
-    postNewUser(newUser)
+    postNewClass(newClass)
   }
-
   useEffect(() => {
     schema.isValid(formValues).then((valid) => {
       setButtonDisabled(!valid)
     })
   }, [formValues])
-
   return (
     <StyledDiv>
       <StyledErr>
         <div>{errors.name}</div>
-        <div>{errors.email}</div>
-        <div>{errors.username}</div>
-        <div>{errors.password}</div>
-        <div>{errors.role}</div>
+        <div>{errors.type}</div>
+        <div>{errors.start_time}</div>
+        <div>{errors.date}</div>
+        <div>{errors.duration}</div>
+        <div>{errors.intensity_level}</div>
+        <div>{errors.location}</div>
+        <div>{errors.attendees}</div>
+        <div>{errors.max_size}</div>
       </StyledErr>
       <StyledForm onSubmit={onSubmit}>
         <label htmlFor="name">
@@ -152,56 +164,81 @@ export default function SignUpForm(props) {
             name="name"
             value={formValues.name}
             onChange={onChange}
-            placeholder="Full Name"
+            placeholder="Class Name"
           />
         </label>
-        <label htmlFor="email">
-          E-mail:
-          <input
-            type="email"
-            name="email"
-            value={formValues.email}
-            onChange={onChange}
-            placeholder="example@email.com"
-          />
-        </label>
-        <label htmlFor="username">
-          Username:
+        <label htmlFor="type">
+          Class Type:
           <input
             type="text"
-            name="username"
-            value={formValues.username}
+            name="type"
+            value={formValues.type}
             onChange={onChange}
-            placeholder="Min. 4 chars"
+            placeholder="Class type"
           />
         </label>
-        <label htmlFor="password">
-          Password:
+        <label htmlFor="start_time">
+          Start Time:
           <input
-            type="password"
-            name="password"
-            value={formValues.password}
+            type="text"
+            name="start_time"
+            value={formValues.start_time}
+            onChange={onChange}
+            placeholder=""
+          />
+        </label>
+        <label htmlFor="date">
+          Date:
+          <input
+            type="date"
+            name="date"
+            value={formValues.date}
             onChange={onChange}
           />
         </label>
         <label>
-          User
+          Duration:
           <input
-            type="radio"
-            name="role"
-            value="User"
-            checked={formValues.role === 'User'}
+            type="number"
+            name="duration"
+            value={formValues.duration}
             onChange={onChange}
           />
         </label>
 
         <label>
-          Instructor
+          Intensity:
           <input
-            type="radio"
-            name="role"
-            value="Instructor"
-            checked={formValues.role === 'Instructor'}
+            type="text"
+            name="intensity_level"
+            value={formValues.intensity_level}
+            onChange={onChange}
+          />
+        </label>
+        <label>
+          Location:
+          <input
+            type="text"
+            name="location"
+            value={formValues.location}
+            onChange={onChange}
+          />
+        </label>
+        <label>
+          Attendees:
+          <input
+            type="number"
+            name="attendees"
+            value={formValues.attendees}
+            onChange={onChange}
+          />
+        </label>
+        <label>
+          Capacity:
+          <input
+            type="number"
+            name="max_size"
+            value={formValues.max_size}
             onChange={onChange}
           />
         </label>
