@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import * as yup from 'yup'
-import styled from 'styled-components'
-import schema from '../validation/signUpFormSchema'
+import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+import * as yup from 'yup';
+import styled from 'styled-components';
+import schema from '../validation/signUpFormSchema';
+import { connect } from 'react-redux';
+import { postSignup } from '../actions/index';
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -59,7 +61,8 @@ const StyledBtn = styled.button`
 `
 
 const initialValues = {
-  name: '',
+  first_name: '',
+  last_name: '',
   email: '',
   username: '',
   password: '',
@@ -67,16 +70,17 @@ const initialValues = {
 }
 
 const defaultErrors = {
-  name: '',
+  first_name: '',
+  last_name: '',
   email: '',
   username: '',
   password: '',
   role: '',
 }
 
-export default function SignUpForm(props) {
+function SignUpForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
-  const [users, setUsers] = useState([])
+  // const [users, setUsers] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
@@ -103,23 +107,25 @@ export default function SignUpForm(props) {
   }
 
   const postNewUser = (newUser) => {
-    axios
-      .post('https://reqres.in/api/users', newUser)
-      .then((res) => {
-        setUsers([res.data, ...users])
-        setFormValues(initialValues)
-        debugger
-      })
-      .catch((err) => {
-        console.error(err)
-        debugger
-      })
+    // axios
+    //   .post('https://reqres.in/api/users', newUser)
+    //   .then((res) => {
+    //     setUsers([res.data, ...users])
+    //     setFormValues(initialValues)
+    //     debugger
+    //   })
+    //   .catch((err) => {
+    //     console.error(err)
+    //     debugger
+    //   })
+    props.postSignup(newUser);
   }
 
   const onSubmit = (evt) => {
     evt.preventDefault()
     const newUser = {
-      name: formValues.name.trim(),
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
       username: formValues.username.trim(),
       password: formValues.password.trim(),
@@ -137,21 +143,32 @@ export default function SignUpForm(props) {
   return (
     <StyledDiv>
       <StyledErr>
-        <div>{errors.name}</div>
+        <div>{errors.first_name}</div>
+        <div>{errors.last_name}</div>
         <div>{errors.email}</div>
         <div>{errors.username}</div>
         <div>{errors.password}</div>
         <div>{errors.role}</div>
       </StyledErr>
       <StyledForm onSubmit={onSubmit}>
-        <label htmlFor="name">
-          Name:
+        <label htmlFor="first_name">
+          First Name:
           <input
             type="text"
-            name="name"
-            value={formValues.name}
+            name="first_name"
+            value={formValues.first_name}
             onChange={onChange}
-            placeholder="Full Name"
+            placeholder="First Name"
+          />
+        </label>
+        <label htmlFor="last_name">
+          Last Name:
+          <input
+            type="text"
+            name="last_name"
+            value={formValues.last_name}
+            onChange={onChange}
+            placeholder="Last Name"
           />
         </label>
         <label htmlFor="email">
@@ -188,8 +205,8 @@ export default function SignUpForm(props) {
           <input
             type="radio"
             name="role"
-            value="User"
-            checked={formValues.role === 'User'}
+            value="client"
+            checked={formValues.role === 'client'}
             onChange={onChange}
           />
         </label>
@@ -199,8 +216,8 @@ export default function SignUpForm(props) {
           <input
             type="radio"
             name="role"
-            value="Instructor"
-            checked={formValues.role === 'Instructor'}
+            value="instructor"
+            checked={formValues.role === 'instructor'}
             onChange={onChange}
           />
         </label>
@@ -209,3 +226,5 @@ export default function SignUpForm(props) {
     </StyledDiv>
   )
 }
+
+export default connect(null, { postSignup })(SignUpForm);

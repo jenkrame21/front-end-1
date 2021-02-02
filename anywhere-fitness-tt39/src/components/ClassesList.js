@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import Class from './Class';
 
 const ClassesList = (props) => {
+    const { getClasses } = props
     
     useEffect(() => {
         getClasses();
-    }, []);
+    }, [getClasses]);
 
     if(props.error) {
         return <h2>{props.error}</h2>
@@ -19,6 +20,7 @@ const ClassesList = (props) => {
 
     return(
         <div className="classesList">
+            <h1>Classes Available:</h1>
             {props.classes.map(item => {
                 return <Class item={item} key={item.id}/>
             })}
@@ -28,9 +30,9 @@ const ClassesList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        classes: state.classes,
-        isLoading: state.isLoading,
-        error: state.loadingError
+        classes: state.classes.classes,
+        isLoading: state.classes.isLoading,
+        error: state.classes.loadingError
     }
 };
 
