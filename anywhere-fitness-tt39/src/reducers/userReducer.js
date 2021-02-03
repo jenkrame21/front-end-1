@@ -2,12 +2,14 @@ import {
     START_USER_CALL,
     POST_USER_SUCCESS,
     POST_USER_FAILURE,
+    USER_LOGOUT
 } from '../actions/index';
 
 const initialState = {
-    user: {},
+    //grabs user info from local storage if it's there (so it survives a page refresh)
+    user: JSON.parse(window.localStorage.getItem('userInfo')) || {},
     isLoading: false,
-    addingError: 'ERROR',
+    addingError: '',
     isLoggedIn: window.localStorage.getItem('token')
 }
 
@@ -17,19 +19,29 @@ const userReducer = (state = initialState, action) => {
             return  {
                 ...state,
                 isLoading: true,
-                addingError: ''
+                addingError: '',
+                isLoggedIn: false
             }
         case POST_USER_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
-                isLoading: false
+                isLoading: false,
+                isLoggedIn: true
             }
         case POST_USER_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                addingError: action.payload
+                addingError: action.payload,
+                isLoggedIn: false
+            }
+        case USER_LOGOUT:
+            return {
+                user: {},
+                isLoading: false,
+                addingError: '',
+                isLoggedIn: false
             }
         default:
             return state
