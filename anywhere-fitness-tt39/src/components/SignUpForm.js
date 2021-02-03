@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import schema from '../validation/signUpFormSchema';
 import { connect } from 'react-redux';
 import { postSignup } from '../actions/index';
+import { useHistory } from 'react-router-dom';
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -51,6 +52,7 @@ const StyledBtn = styled.button`
   border: 2px solid lightcoral;
   border-radius: 10px;
   font-weight: bold;
+  transition: 0.4s all ease-in-out;
   &:hover {
     color: whitesmoke;
     background-color: lightcoral;
@@ -106,6 +108,8 @@ function SignUpForm(props) {
     })
   }
 
+  const { push } = useHistory();
+
   const postNewUser = (newUser) => {
     // axios
     //   .post('https://reqres.in/api/users', newUser)
@@ -119,6 +123,8 @@ function SignUpForm(props) {
     //     debugger
     //   })
     props.postSignup(newUser);
+    setFormValues(initialValues);
+    push('/login');
   }
 
   const onSubmit = (evt) => {
