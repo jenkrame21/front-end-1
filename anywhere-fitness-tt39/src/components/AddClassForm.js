@@ -3,6 +3,8 @@ import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/addClassFormSchema'
+import { connect } from 'react-redux';
+import { postClass } from '../actions';
 
 
 const StyledDiv = styled.div`
@@ -82,7 +84,7 @@ const defaultErrors = {
   max_size: '',
 }
 
-export default function AddClassForm(props) {
+function AddClassForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
   const [classes, setClasses] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
@@ -111,16 +113,17 @@ export default function AddClassForm(props) {
   }
 
   const postNewClass = (newClass) => {
-    axios
-      .post('https://reqres.in/api/users', newClass)
-      .then((res) => {
-        setClasses([res.data, ...classes])
-        setFormValues(initialValues)
-      })
-      .catch((err) => {
-        console.error(err)
-        debugger
-      })
+    // axios
+    //   .post('https://reqres.in/api/users', newClass)
+    //   .then((res) => {
+    //     setClasses([res.data, ...classes])
+    //     setFormValues(initialValues)
+    //   })
+    //   .catch((err) => {
+    //     console.error(err)
+    //     debugger
+    //   })
+    props.postClass(newClass);
   }
 
   const onSubmit = (evt) => {
@@ -247,3 +250,5 @@ export default function AddClassForm(props) {
     </StyledDiv>
   )
 }
+
+export default connect(null, { postClass })(AddClassForm)

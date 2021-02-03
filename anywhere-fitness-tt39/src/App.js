@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import { Route, Link, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 // import PrivateRoute from './components/PrivateRoute';
@@ -27,8 +27,12 @@ function App() {
       <NavBar loggedIn={loggedIn} logout={logout}/>
       <Switch>
         <Route path='/about' component={AboutUs}/>
-        <Route path='/' component={Home} setLoggedIn={setLoggedIn}/>
+        <Route path='/'>
+          <Home setLoggedIn={setLoggedIn}/>
+        </Route>
       </Switch>
+      <AddClassForm />
+      <ClassesList />
     </div>
   );
 }
