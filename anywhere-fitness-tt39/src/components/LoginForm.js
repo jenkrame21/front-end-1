@@ -110,9 +110,9 @@ function LoginForm(props) {
     //     console.error(err)
     //     debugger
     //   })
+    // props.setLoggedIn(true);
     props.postLogin(newUser)
     setFormValues(initialValues)
-    props.setLoggedIn(true);
   }
 
   const onSubmit = (evt) => {

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Link, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 // import PrivateRoute from './components/PrivateRoute';
@@ -9,6 +9,8 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import Home from './components/Home';
 import AddClassForm from './components/AddClassForm'
+import User from './components/User';
+import Instructor from './components/Instructor';
 
 
 function App() {
@@ -26,13 +28,13 @@ function App() {
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
       <Switch>
+        <Route path='/instructor' component={Instructor} />
+        <Route path='/user' component={User} />
         <Route path='/about' component={AboutUs}/>
         <Route path='/'>
           <Home setLoggedIn={setLoggedIn}/>
         </Route>
       </Switch>
-      <AddClassForm />
-      <ClassesList />
     </div>
   );
 }

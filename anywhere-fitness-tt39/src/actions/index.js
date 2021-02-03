@@ -28,14 +28,19 @@ export const DELETE_CLASS_FAILURE = "DELETE_CLASS_FAILURE";
 // Login action:
 export const postLogin = (login) => (dispatch) => {
     dispatch({ type: START_USER_CALL });
-
+    
     // Add axios
     axiosWithAuth()
         .post('/auth/login', login)
         .then((res) => {
             localStorage.setItem('token', res.data.token);
-            console.log("Post User Success: ", res.data.token);
+            console.log("Post User Success: ", res.data.user.role);
             dispatch({ type: POST_USER_SUCCESS, payload: res.data.user });
+            if (res.data.user.role === 'client') {
+                window.location.href = '/user';
+            } else if (res.data.user.role === 'instructor') {
+                window.location.href = '/instructor';
+            }
         })
         .catch((err) => {
             console.log("Post User Failure: ", err.message);
