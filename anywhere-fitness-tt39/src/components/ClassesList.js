@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Class from './Class';
 
 const ClassesList = (props) => {
-    const { getClasses } = props
+    const { getClasses } = props;
     
     useEffect(() => {
         getClasses();
@@ -19,11 +19,13 @@ const ClassesList = (props) => {
     };
 
     return(
-        <div className="classesList">
+        <div>
             <h1>Classes Available:</h1>
-            {props.classes.map(item => {
-                return <Class item={item} key={item.id}/>
-            })}
+            <div className="classes-list">
+                {props.classes.map(item => {
+                    return <Class item={item} key={item.class_id}/>
+                })}
+            </div>
         </div>
     )
 };

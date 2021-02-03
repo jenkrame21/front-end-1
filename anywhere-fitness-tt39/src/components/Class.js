@@ -1,16 +1,77 @@
 import React from 'react';
 
 const Class = ({ item }) => {
+
+    // Need ability to select class to add to signed up list
+
+    const handleSelectClass = (e) => {
+
+    };
+
     return(
         <div className="class-card">
-            <h3>{item.name}</h3>
-            <h3>{item.type}</h3>
-            <h3>{item.start_time}</h3>
-            <h3>{item.duration}</h3>
-            <h3>{item.intensity_level}</h3>
-            <h3>{item.location}</h3>
-            <h3>{item.attendees}</h3>
-            <h3>{item.max_size}</h3>
+            <div className="seperate">
+                <h3>Course Name:</h3>
+                <p>{item.name}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Type:</h3>
+                <p>{item.type}</p>
+            </div>
+            
+            <hr/>
+
+            <div className="seperate">
+                <h3>Date:</h3>
+                <p>{item.date}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Start Time:</h3>
+                <p>{item.start_time}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Duration:</h3>
+                <p>{item.duration}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Intensity Level:</h3>
+                <p>{item.intensity_level}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Location:</h3>
+                <p>{item.location}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Attendees:</h3>
+                <p>{item.attendees}</p>
+            </div>
+
+            <hr/>
+
+            <div className="seperate">
+                <h3>Max Class Size:</h3>
+                <p>{item.max_size}</p>
+            </div>
+
+            <button onClick={handleSelectClass}>Select Class</button>
         </div>
     )
 };
