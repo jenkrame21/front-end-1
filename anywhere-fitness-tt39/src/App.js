@@ -8,7 +8,7 @@ import ClassesList from './components/ClassesList';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import Home from './components/Home';
-
+import AddClassForm from './components/AddClassForm'
 
 
 function App() {
