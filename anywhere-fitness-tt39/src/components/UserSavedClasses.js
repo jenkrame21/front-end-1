@@ -2,20 +2,30 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getClassById } from '../actions/index';
 
-const UserSavedClasses = () => {
+const UserSavedClasses = ({ user_id, saved_classes, getClassById }) => {
 
     useEffect(() => {
-        getClassById()
+        getClassById(user_id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return(
         <div>
             <h1>Saved Classes: </h1>
             <div className="classes-list">
-                {/* Would like to map through list and select id of what user chooses to show up here */}
+                {saved_classes.map(sClass => {
+                    return sClass.name
+                })}
             </div>
         </div>
     )
 };
 
-export default connect(null, { getClassById })(UserSavedClasses);
+const mapStateToProps = (state) => {
+    return{
+        user_id: state.user.user.id,
+        saved_classes: state.classes.saved_classes
+    }
+};
+
+export default connect(mapStateToProps, { getClassById })(UserSavedClasses);

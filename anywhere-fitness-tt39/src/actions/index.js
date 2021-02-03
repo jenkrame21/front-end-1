@@ -6,10 +6,13 @@ export const POST_USER_SUCCESS = "POST_LOGIN_SUCCESS";
 export const POST_USER_FAILURE = "POST_LOGIN_FAILURE";
 export const USER_LOGOUT = "USER_LOGOUT";
 
-// Get Class Call
+// Get All Classes Call
 export const START_GET_CLASSES_CALL = "START_GET_CLASSES_CALL";
 export const GET_CLASSES_SUCCESS = "GET_CLASSES_SUCCESS";
 export const GET_CLASSES_FAILURE = "GET_CLASSES_FAILURE";
+
+// Get Class by User ID Call
+export const GET_CLASS_BY_ID_CALL = "GET_CLASS_BY_ID_CALL";
 export const GET_CLASS_BY_ID_SUCCESS = "GET_CLASS_BY_ID_SUCCESS";
 export const GET_CLASS_BY_ID_FAILURE = "GET_CLASS_BY_ID_FAILURE";
 
@@ -93,17 +96,17 @@ export const getClasses = () => (dispatch) => {
 
 // Get class by id action:
 export const getClassById = (id) => (dispatch) => {
-    dispatch({ type: START_GET_CLASSES_CALL });
+    dispatch({ type: GET_CLASS_BY_ID_CALL });
 
     axiosWithAuth()
         .get(`/user_classes/${id}`)
         .then((res) => {
             console.log("Get Class by id Success: ", res.data);
-            // dispatch({ type: , payload: res.data.classes.classes.id.class_id })
+            dispatch({ type: GET_CLASS_BY_ID_SUCCESS, payload: res.data });
         })
         .catch((err) => {
             console.log("Get Class by id Failure: ", err.message);
-            // dispatch({ type: , payload: err.message });
+            dispatch({ type: GET_CLASS_BY_ID_FAILURE, payload: err.message });
         });
 };
 

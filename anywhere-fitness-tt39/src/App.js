@@ -7,12 +7,8 @@ import AboutUs from './components/AboutUs';
 import Home from './components/Home';
 import User from './components/User';
 import Instructor from './components/Instructor';
-import UserSavedClasses from './components/UserSavedClasses';
-
-
 
 function App(props) {
-
 
   return (
     <div className="App">

@@ -2,6 +2,7 @@ import {
     START_GET_CLASSES_CALL,
     GET_CLASSES_SUCCESS,
     GET_CLASSES_FAILURE,
+    GET_CLASS_BY_ID_CALL,
     GET_CLASS_BY_ID_SUCCESS,
     GET_CLASS_BY_ID_FAILURE,
     START_ADDING_CLASS,
@@ -19,7 +20,8 @@ const initialState = {
     classes: [],
     isLoading: false,
     loadingError: '',
-    addingError: ''
+    addingError: '',
+    saved_classes: []
 };
 
 const classReducer = (state = initialState, action) => {
@@ -44,17 +46,24 @@ const classReducer = (state = initialState, action) => {
                 loadingError: action.payload
             }
         // FIX BELOW //
-        // GET CLASS BY ID //
+        // GET CLASS BY ID - SAVED CLASS USER //
+        case GET_CLASS_BY_ID_CALL:
+            return {
+                ...state,
+                isLoading: true,
+                loadingError: ''
+            }
         case GET_CLASS_BY_ID_SUCCESS:
             return {
                 ...state,
-                classes: [
-                    ...state.classes,
-                ]
+                isLoading: false,
+                saved_classes: action.payload
             }
         case GET_CLASS_BY_ID_FAILURE:
             return {
-                ...state
+                ...state,
+                isLoading: false,
+                loadingError: action.payload
             }
         // ADD CLASS //
         case START_ADDING_CLASS:
