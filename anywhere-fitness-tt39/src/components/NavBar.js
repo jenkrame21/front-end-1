@@ -1,6 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
 import styled from "styled-components";
+import { logout } from '../actions';
 
 const Nav = styled.div `
   display: flex;
@@ -20,7 +22,12 @@ const Nav = styled.div `
 
 `
 
-const NavBar = ({ loggedIn, logout }) => {
+const NavBar = ({ loggedIn, logout, role }) => {
+  const { push } = useHistory();
+  const handleLogout = () => {
+    logout();
+    push('/')
+  }
   return (
     <Nav>
       <h1>Anywhere Fitness</h1>
@@ -29,6 +36,17 @@ const NavBar = ({ loggedIn, logout }) => {
           <Link to='/'>
             <li>Home</li>
           </Link>
+
+          { (role === 'instructor') &&
+            <Link to='/instructor'>
+              <li>My Classes</li>
+            </Link>
+          } 
+          { (role === 'client') &&
+            <Link to='/user'>
+              <li>My Classes</li>
+            </Link>
+          } 
           { !loggedIn &&
             <Link to='signup'>
               <li>SignUp</li>
@@ -40,7 +58,7 @@ const NavBar = ({ loggedIn, logout }) => {
             </Link>
           }
           { loggedIn &&
-            <Link onClick={logout}>
+            <Link onClick={handleLogout}>
             <li>Log Out</li>
             </Link>
           }
@@ -54,4 +72,11 @@ const NavBar = ({ loggedIn, logout }) => {
   );
 };
 
-export default NavBar;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.user.isLoggedIn,
+    role: state.user.user.role
+  }
+}
+
+export default connect(mapStateToProps, { logout })(NavBar);
