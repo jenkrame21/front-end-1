@@ -7,7 +7,8 @@ import {
 const initialState = {
     user: {},
     isLoading: false,
-    addingError: 'ERROR'
+    addingError: 'ERROR',
+    isLoggedIn: window.localStorage.getItem('token')
 }
 
 const userReducer = (state = initialState, action) => {
