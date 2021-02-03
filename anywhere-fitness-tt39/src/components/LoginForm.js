@@ -111,6 +111,8 @@ function LoginForm(props) {
     //     debugger
     //   })
     props.postLogin(newUser)
+    setFormValues(initialValues)
+    props.setLoggedIn(true);
   }
 
   const onSubmit = (evt) => {

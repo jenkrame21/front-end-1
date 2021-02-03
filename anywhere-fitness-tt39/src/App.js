@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Route, Link, Switch, useHistory } from 'react-router-dom';
+import './App.css';
 // import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
-import './App.css';
 import ClassesList from './components/ClassesList';
-import SignUpForm from './components/SignUpForm'
-import LoginForm from './components/LoginForm'
+import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
+import Home from './components/Home';
 import AddClassForm from './components/AddClassForm'
 
 
@@ -24,12 +25,10 @@ function App() {
   return (
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout}/>
-      <ClassesList />
-
-      <Route path='/login' component={LoginForm}/>
-      <Route path= '/signup' component={SignUpForm} />
-      <Route path='/about' component={AboutUs}/>
-
+      <Switch>
+        <Route path='/about' component={AboutUs}/>
+        <Route path='/' component={Home} setLoggedIn={setLoggedIn}/>
+      </Switch>
     </div>
   );
 }
