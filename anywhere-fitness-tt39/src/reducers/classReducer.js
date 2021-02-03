@@ -2,6 +2,8 @@ import {
     START_GET_CLASSES_CALL,
     GET_CLASSES_SUCCESS,
     GET_CLASSES_FAILURE,
+    GET_CLASS_BY_ID_SUCCESS,
+    GET_CLASS_BY_ID_FAILURE,
     START_ADDING_CLASS,
     ADD_CLASS_SUCCESS,
     ADD_CLASS_FAILURE,
@@ -22,6 +24,7 @@ const initialState = {
 
 const classReducer = (state = initialState, action) => {
     switch (action.type) {
+        // GET ALL CLASSES //
         case START_GET_CLASSES_CALL:
             return {
                 ...state,
@@ -40,6 +43,20 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 loadingError: action.payload
             }
+        // FIX BELOW //
+        // GET CLASS BY ID //
+        case GET_CLASS_BY_ID_SUCCESS:
+            return {
+                ...state,
+                classes: [
+                    ...state.classes,
+                ]
+            }
+        case GET_CLASS_BY_ID_FAILURE:
+            return {
+                ...state
+            }
+        // ADD CLASS //
         case START_ADDING_CLASS:
             return {
                 ...state,
@@ -59,6 +76,7 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 addingError: action.payload
             }
+        // UPDATE CLASS //
         case START_UPDATE_CLASS_CALL:
             return {
                 ...state,
@@ -80,6 +98,7 @@ const classReducer = (state = initialState, action) => {
                     ...state.classes
                 ]
             }
+        // DELETE CLASS //
         case START_DELETE_CLASS_CALL:
             return {
                 ...state,

@@ -1,11 +1,14 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Class = ({ item }) => {
+    const history = useHistory();
 
     // Need ability to select class to add to signed up list
 
     const handleSelectClass = (e) => {
-
+        history.push('/user_classes')
+        
     };
 
     return(

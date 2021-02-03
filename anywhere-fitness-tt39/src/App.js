@@ -11,6 +11,7 @@ import Home from './components/Home';
 import AddClassForm from './components/AddClassForm'
 import User from './components/User';
 import Instructor from './components/Instructor';
+import UserSavedClasses from './components/UserSavedClasses';
 
 
 function App() {
@@ -30,7 +31,8 @@ function App() {
       <Switch>
         <Route path='/instructor' component={Instructor} />
         <Route path='/user' component={User} />
-        <Route path='/about' component={AboutUs}/>
+        <Route path='/about' component={AboutUs} />
+        <Route path='/user_classes' component={UserSavedClasses} />
         <Route path='/'>
           <Home setLoggedIn={setLoggedIn}/>
         </Route>

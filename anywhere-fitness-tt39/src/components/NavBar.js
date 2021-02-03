@@ -48,6 +48,13 @@ const NavBar = ({ loggedIn, logout }) => {
             <li>About Us</li>
           </Link>
 
+          {/*Need role === client too */}
+          { loggedIn && 
+            <Link to='/user_classes'>
+              <li>Saved Classes</li>
+            </Link>
+          }
+
         </ul>
       </nav>
     </Nav>
