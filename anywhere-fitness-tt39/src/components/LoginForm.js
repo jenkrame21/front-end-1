@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/loginFormSchema'
@@ -72,9 +71,17 @@ const defaultErrors = {
 
 function LoginForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
-  // const [users, setUsers] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
+
+  useEffect(() => {
+    if (props.role === 'client'){
+      props.push('/user')
+    } else if (props.role === 'instructor'){
+      props.push('/instructor')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[props.role])
 
   const validate = (inputName, inputValue) => {
     yup
@@ -99,18 +106,6 @@ function LoginForm(props) {
   }
 
   const postNewUser = (newUser) => {
-    // axios
-    //   .post('https://reqres.in/api/users', newUser)
-    //   .then((res) => {
-    //     setUsers([res.data, ...users])
-    //     setFormValues(initialValues)
-    //     debugger
-    //   })
-    //   .catch((err) => {
-    //     console.error(err)
-    //     debugger
-    //   })
-    // props.setLoggedIn(true);
     props.postLogin(newUser)
     setFormValues(initialValues)
   }

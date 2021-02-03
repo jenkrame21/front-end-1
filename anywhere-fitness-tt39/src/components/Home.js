@@ -1,8 +1,9 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, useHistory } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import styled from 'styled-components';
+import { connect } from 'react-redux'
 
 const HomeDiv = styled.div ` 
   display: flex;
@@ -14,7 +15,22 @@ const HomeDiv = styled.div `
   }
 `
 
-const Home = ({ setLoggedIn }) => {
+const Home = (props) => {
+  const { push } = useHistory();
+  console.log('am i logged in: ', props.loggedIn)
+  useEffect(() => {
+    if (props.role === 'client'){
+      push('/user')
+    } else if (props.role === 'instructor'){
+      push('/instructor')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[props.role])
+  
+  if (props.isLoggedIn) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <HomeDiv>
       <section>
@@ -22,15 +38,23 @@ const Home = ({ setLoggedIn }) => {
         <p>Welcome to Anywhere Fitness! We are the premier app for connecting fitness entrepreneurs, and people tired of mainstream gym/exercise locales.</p>
         <p>Signing up is free. Sign up now to see how we can change your life!</p>
       </section>
-      
-      <Route exact path='/'>
-        <LoginForm setLoggedIn={setLoggedIn}/>
-      </Route>
-      <Route path='/login' component={LoginForm}/>
-      <Route path= '/signup' component={SignUpForm} />
-    
+        <Route exact path='/'>
+          <LoginForm />
+        </Route>
+        <Route path='/login'>
+          <LoginForm />
+        </Route> 
+        <Route path= '/signup'>
+          <SignUpForm /> 
+        </Route> 
       </HomeDiv>
   );
 }
+const mapStateToProps = state => {
+  return {
+    role: state.user.user.role,
+    loggedIn: state.user.isLoggedIn
+  }
+}
 
-export default Home;
+export default connect(mapStateToProps, {})(Home);

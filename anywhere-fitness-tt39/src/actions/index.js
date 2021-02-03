@@ -4,6 +4,7 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 export const START_USER_CALL = "START_POST_LOGIN_CALL";
 export const POST_USER_SUCCESS = "POST_LOGIN_SUCCESS";
 export const POST_USER_FAILURE = "POST_LOGIN_FAILURE";
+export const USER_LOGOUT = "USER_LOGOUT";
 
 // Get Class Call
 export const START_GET_CLASSES_CALL = "START_GET_CLASSES_CALL";
@@ -29,25 +30,33 @@ export const DELETE_CLASS_FAILURE = "DELETE_CLASS_FAILURE";
 
 // Login action:
 export const postLogin = (login) => (dispatch) => {
+    // removes current token, if previously logged in
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userInfo');
     dispatch({ type: START_USER_CALL });
 
     axiosWithAuth()
         .post('/auth/login', login)
         .then((res) => {
-            localStorage.setItem('token', res.data.token);
+            //setting token and userInfo to local storage
+            window.localStorage.setItem('token', res.data.token);
+            window.localStorage.setItem('userInfo', JSON.stringify(res.data.user))
             console.log("Post User Success: ", res.data.user.role);
             dispatch({ type: POST_USER_SUCCESS, payload: res.data.user });
-            if (res.data.user.role === 'client') {
-                window.location.href = '/user';
-            } else if (res.data.user.role === 'instructor') {
-                window.location.href = '/instructor';
-            }
         })
         .catch((err) => {
             console.log("Post User Failure: ", err.message);
             dispatch({ type: POST_USER_FAILURE, payload: err.message });
         });
 };
+
+// Logout action:
+export const logout = () => (dispatch) => {
+    //Removing token and user Info
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userInfo');
+    dispatch({ type: USER_LOGOUT });
+}
 
 // Register action:
 export const postSignup = (signup) => (dispatch) => {
@@ -58,6 +67,7 @@ export const postSignup = (signup) => (dispatch) => {
         .then((res) => {
             console.log("Post User Success: ", res.data);
             dispatch({ type: POST_USER_SUCCESS, payload: res.data });
+            window.location.href = '/login'
         })
         .catch((err) => {
             console.log("Post User Failure: ", err.message);
