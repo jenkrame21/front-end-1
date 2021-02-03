@@ -50,6 +50,7 @@ const StyledBtn = styled.button`
   border: 2px solid lightcoral;
   border-radius: 10px;
   font-weight: bold;
+  transition: 0.4s all ease-in-out;
   &:hover {
     color: whitesmoke;
     background-color: lightcoral;
