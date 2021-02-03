@@ -33,9 +33,11 @@ const NavBar = ({ loggedIn, logout, role }) => {
       <h1>Anywhere Fitness</h1>
       <nav>
         <ul>
-          <Link to='/'>
+          
+          { !loggedIn &&
+            <Link to='/'>
             <li>Home</li>
-          </Link>
+          </Link>}
 
           { (role === 'instructor') &&
             <Link to='/instructor'>
