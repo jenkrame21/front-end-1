@@ -11,7 +11,7 @@ const HomeDiv = styled.div `
   justify-content: center;
 
   section {
-    width: 50%;
+    width: 40%;
   }
 `
 

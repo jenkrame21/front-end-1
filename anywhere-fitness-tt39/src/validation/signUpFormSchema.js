@@ -17,7 +17,7 @@ export default yup.object().shape({
     .required('Password is required.')
     .matches(
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g,
-      'Password must contain capital, lowercase, number & have a min. length of 8'
+      `Password must contain capital, lowercase, number & have a min. length of 8`
     ),
   role: yup.string().oneOf(['client', 'instructor'], 'Role is required.'),
 })
