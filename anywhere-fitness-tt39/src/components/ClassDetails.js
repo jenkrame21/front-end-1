@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { addUserToClass } from '../actions'
+import { useParams } from 'react-router-dom';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
-const Class = ({ item, addUserToClass, id }) => {
+const Class = ({ allClasses, addUserToClass, userId }) => {
+    // Pulling classid from URL
+    const { classid } = useParams();
+    const [item, setItem] = useState({})
+    // const getClassInfo = () => {
+    // }
+    useEffect(() =>{
+        axiosWithAuth()
+            .get(`/classes/${classid}`)
+            .then(res => {
+                setItem(res.data);
+                console.log('in ue: ', res);
+            })
+            .catch(err => console.log('error getting class info: ', err));
+        // getClassInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     // console.log('this is the item: ', item)
+
     const idObject = {
-        user_id: id,
+        user_id: userId,
         class_id: item.class_id
     }
     const handleSave = (e) => {
         e.preventDefault();
         console.log(idObject)
         addUserToClass(idObject)
+    }
+    if (item === {}) {
+        return <h1>Loading...</h1>
     }
     return(
         <div className="class-card">
@@ -90,7 +112,8 @@ const Class = ({ item, addUserToClass, id }) => {
 
 const mapStateToProps = state => {
     return {
-        id: state.user.user.id
+        userId: state.user.user.id,
+        allClasses: state.classes.classes
     }
 }
 

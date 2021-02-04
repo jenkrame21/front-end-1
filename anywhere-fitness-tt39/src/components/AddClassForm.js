@@ -62,14 +62,15 @@ const StyledBtn = styled.button`
 
 const initialValues = {
   name: '',
+  instructor_username: '', //change to match instructor_username
   type: '',
   start_time: '',
   date: '',
-  duration: '',
+  duration: null,
   intensity_level: '',
   location: '',
-  attendees: '',
-  max_size: '',
+  attendees: 1,
+  max_size: null
 }
 
 const defaultErrors = {
@@ -133,11 +134,12 @@ function AddClassForm(props) {
       type: formValues.type.trim(),
       start_time: formValues.start_time.trim(),
       date: formValues.date.trim(),
-      duration: formValues.duration.trim(),
+      duration: Number(formValues.duration),
       intensity_level: formValues.intensity_level.trim(),
       location: formValues.location.trim(),
-      attendees: formValues.attendees.trim(),
-      max_size: formValues.max_size.trim(),
+      attendees: formValues.attendees,
+      max_size: Number(formValues.max_size),
+      instructor_username: props.user
     }
     postNewClass(newClass)
   }
@@ -156,7 +158,6 @@ function AddClassForm(props) {
         <div>{errors.duration}</div>
         <div>{errors.intensity_level}</div>
         <div>{errors.location}</div>
-        <div>{errors.attendees}</div>
         <div>{errors.max_size}</div>
       </StyledErr>
       <StyledForm onSubmit={onSubmit}>
@@ -170,6 +171,16 @@ function AddClassForm(props) {
             placeholder="Class Name"
           />
         </label>
+        {/* <label htmlFor="instructor_username">
+          Instructor:
+          <input
+            type="text"
+            name="instructor_username"
+            value={formValues.instructor_username}
+            onChange={onChange}
+            placeholder="Instructor Name"
+          />
+        </label> */}
         <label htmlFor="type">
           Class Type:
           <input
@@ -228,15 +239,6 @@ function AddClassForm(props) {
           />
         </label>
         <label>
-          Attendees:
-          <input
-            type="number"
-            name="attendees"
-            value={formValues.attendees}
-            onChange={onChange}
-          />
-        </label>
-        <label>
           Capacity:
           <input
             type="number"
@@ -252,7 +254,7 @@ function AddClassForm(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    
+    user: state.user.user.username
   }
 }
 export default connect(mapStateToProps, { postClass })(AddClassForm)

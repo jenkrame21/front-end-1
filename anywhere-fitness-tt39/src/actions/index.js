@@ -203,3 +203,18 @@ export const deleteClass = (id) => (dispatch) => {
             dispatch({ type: DELETE_CLASS_FAILURE })
         });
 };
+// Delete User From class action:
+export const deleteUserClass = (id) => (dispatch) => {
+    dispatch({ type: START_DELETE_CLASS_CALL });
+
+    axiosWithAuth()
+        .delete(`/classes/${id}`)
+        .then((res) => {
+            console.log("Delete Class Success: ", res.data);
+            dispatch({ type: DELETE_CLASS_SUCCESS })
+        })
+        .catch((err) => {
+            console.log("Delete Class Failure: ", err.message);
+            dispatch({ type: DELETE_CLASS_FAILURE })
+        });
+};

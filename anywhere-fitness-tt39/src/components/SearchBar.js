@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getClasses } from '../actions/index'
 import axios from 'axios'
 import ClassesList from './ClassesList';
-import Class from './Class';
+import ClassSimple from './ClassSimple';
 
 export default function SearchBar(props) {
   const [search, setSearch] = useState('')
@@ -69,7 +69,7 @@ export default function SearchBar(props) {
         .map((cla) => {
           // Should be hooked up to other
           return (
-            <Class item={cla} key={cla.class_id}/>
+            <ClassSimple item={cla} key={cla.class_id}/>
           )
         })}
     </div>

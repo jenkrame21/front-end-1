@@ -24,7 +24,7 @@ import {
 
 const initialState = {
     classes: [],
-    isLoading: false,
+    isLoading: true,
     loadingError: '',
     addingError: '',
     saved_classes: [],
@@ -102,7 +102,7 @@ const classReducer = (state = initialState, action) => {
         case ADD_CLASS_SUCCESS:
             return {
                 ...state,
-                classes: action.payload,
+                classes: [...state.classes, action.payload],
                 isLoading: false
             }
         case ADD_CLASS_FAILURE:
