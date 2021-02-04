@@ -173,11 +173,11 @@ export const addUserToClass = (idObject) => (dispatch) => {
 
 
 // INSTRUCTOR - Update class action:
-export const updateClass = (id) => (dispatch) => {
+export const updateClass = (id, update) => (dispatch) => {
     dispatch({ type: START_UPDATE_CLASS_CALL })
 
     axiosWithAuth()
-        .put(`/classes/${id}`)
+        .put(`/classes/${id}`, update )
         .then((res) => {
             console.log("Update Class Success: ", res.data);
             dispatch({ type: UPDATE_CLASS_SUCCESS, payload: res.data });
@@ -196,7 +196,7 @@ export const deleteClass = (id) => (dispatch) => {
         .delete(`/classes/${id}`)
         .then((res) => {
             console.log("Delete Class Success: ", res.data);
-            dispatch({ type: DELETE_CLASS_SUCCESS })
+            dispatch({ type: DELETE_CLASS_SUCCESS, payload: id })
         })
         .catch((err) => {
             console.log("Delete Class Failure: ", err.message);
