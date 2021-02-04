@@ -7,6 +7,7 @@ import AboutUs from './components/AboutUs';
 import Home from './components/Home';
 import User from './components/User';
 import Instructor from './components/Instructor';
+import SearchBar from './components/SearchBar';
 import UserSavedClasses from './components/UserSavedClasses';
 
 
