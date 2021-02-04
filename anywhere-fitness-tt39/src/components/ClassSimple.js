@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { addUserToClass } from '../actions'
 import { useHistory } from 'react-router-dom';
 
-const Class = ({ item, addUserToClass, id }) => {
+const Class = ({ item, addUserToClass, id, role }) => {
 
     // console.log('this is the item: ', item)
     // const idObject = {
@@ -18,9 +18,14 @@ const Class = ({ item, addUserToClass, id }) => {
     const { push } = useHistory();
 
     const handleSave = e => {
-      e.preventDefault()
-      push(`/user/class/${item.class_id}`)
-    }
+        e.preventDefault()
+        if(role === 'client'){
+            push(`/user/class/${item.class_id}`)
+        } else {
+            push(`/instructor/class/${item.class_id}`)
+        }
+    };
+    
     return(
         <div onClick={handleSave} className="class-card">
             <div className="seperate">
@@ -53,7 +58,8 @@ const Class = ({ item, addUserToClass, id }) => {
 
 const mapStateToProps = state => {
     return {
-        id: state.user.user.id
+        id: state.user.user.id,
+        role: state.user.user.role
     }
 }
 

@@ -26,8 +26,9 @@ const NavBar = ({ loggedIn, logout, role }) => {
   const { push } = useHistory();
   const handleLogout = () => {
     logout();
-    push('/')
-  }
+    push('/');
+  };
+  
   return (
     <Nav>
       <h1>Anywhere Fitness</h1>

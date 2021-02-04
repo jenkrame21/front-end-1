@@ -4,7 +4,7 @@ import { addUserToClass } from '../actions'
 import { useParams } from 'react-router-dom';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
-const Class = ({ allClasses, addUserToClass, userId }) => {
+const Class = ({ allClasses, addUserToClass, userId, role }) => {
     // Pulling classid from URL
     const { classid } = useParams();
     const [item, setItem] = useState({})
@@ -44,6 +44,7 @@ const Class = ({ allClasses, addUserToClass, userId }) => {
             </div>
 
             <hr/>
+
             <div className="seperate">
                 <h3>Instructor Name:</h3>
                 <p>{item.instructor_username}</p>
@@ -105,7 +106,17 @@ const Class = ({ allClasses, addUserToClass, userId }) => {
                 <p>{item.max_size}</p>
             </div>
 
-            <button onClick={handleSave}>Save Class</button>
+            <div className="buttons">
+                {
+                    (role === 'client') &&
+                    <button onClick={handleSave}>Save Class</button>
+                }
+                {
+                    (role === 'instructor') &&
+                    <button>Update Class</button>
+                }
+                <button className="delete-button">Delete Class</button>
+            </div>
         </div>
     )
 };
@@ -113,7 +124,8 @@ const Class = ({ allClasses, addUserToClass, userId }) => {
 const mapStateToProps = state => {
     return {
         userId: state.user.user.id,
-        allClasses: state.classes.classes
+        allClasses: state.classes.classes,
+        role: state.user.user.role
     }
 }
 

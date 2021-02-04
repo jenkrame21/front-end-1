@@ -1,4 +1,5 @@
 import {
+    // USER/INSTRUCTOR - Login/Logout
     START_USER_CALL,
     POST_USER_SUCCESS,
     POST_USER_FAILURE,
