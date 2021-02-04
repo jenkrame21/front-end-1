@@ -1,22 +1,29 @@
 import {
+    // USER/INSTRUCTOR - Get All Classes Call
     START_GET_CLASSES_CALL,
     GET_CLASSES_SUCCESS,
     GET_CLASSES_FAILURE,
+    // USER/INSTRUCTOR(?) - Get Class by User ID
     GET_CLASS_BY_USER_ID_CALL,
     GET_CLASS_BY_USER_ID_SUCCESS,
     GET_CLASS_BY_USER_ID_FAILURE,
+    // USER/INSTRUCTOR(?) - Get Users by Class ID
     GET_USERS_BY_CLASS_BY_ID_CALL,
     GET_USERS_BY_CLASS_BY_ID_SUCCESS,
     GET_USERS_BY_CLASS_BY_ID_FAILURE,
+    // INSTRUCTOR - Add New Class
     START_ADDING_CLASS,
     ADD_CLASS_SUCCESS,
     ADD_CLASS_FAILURE,
+    // INSTRUCTOR - Add User To Class
     START_ADD_USER_TO_CLASS,
     ADD_USER_TO_CLASS_SUCCESS,
     ADD_USER_TO_CLASS_FAIL,
+    // INSTRUCTOR - Update Class
     START_UPDATE_CLASS_CALL,
     UPDATE_CLASS_SUCCESS,
     UPDATE_CLASS_FAILURE,
+    // INSTRUCTOR - Delete Class
     START_DELETE_CLASS_CALL,
     DELETE_CLASS_SUCCESS,
     DELETE_CLASS_FAILURE
@@ -33,7 +40,7 @@ const initialState = {
 
 const classReducer = (state = initialState, action) => {
     switch (action.type) {
-        // GET ALL CLASSES //
+        // USER/INSTRUCTOR - Get All Classes Call
         case START_GET_CLASSES_CALL:
             return {
                 ...state,
@@ -52,8 +59,7 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 loadingError: action.payload
             }
-        // FIX BELOW //
-        // GET CLASS BY ID - SAVED CLASS USER //
+        // FIX!!! - USER/INSTRUCTOR(?) - Get Class by User ID
         case GET_CLASS_BY_USER_ID_CALL:
             return {
                 ...state,
@@ -72,27 +78,27 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 loadingError: action.payload
             }
-        // GET Users BY Class ID - //
-            case GET_USERS_BY_CLASS_BY_ID_CALL:
-                return {
-                    ...state,
-                    isLoading: true,
-                    loadingError: ''
-                }
-            case GET_USERS_BY_CLASS_BY_ID_SUCCESS:
-                return {
-                    ...state,
-                    isLoading: false,
-                    class_attendees: action.payload
-                }
-            case GET_USERS_BY_CLASS_BY_ID_FAILURE:
-                return {
-                    ...state,
-                    isLoading: false,
-                    loadingError: action.payload
-                }
-        // ADD CLASS //
-            case START_ADDING_CLASS:
+        // FIX!!! - USER/INSTRUCTOR(?) - Get Users by Class ID
+        case GET_USERS_BY_CLASS_BY_ID_CALL:
+            return {
+                ...state,
+                isLoading: true,
+                loadingError: ''
+            }
+        case GET_USERS_BY_CLASS_BY_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                class_attendees: action.payload
+            }
+        case GET_USERS_BY_CLASS_BY_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                loadingError: action.payload
+            }
+        // INSTRUCTOR - Add New Class
+        case START_ADDING_CLASS:
             return {
                 ...state,
                 isLoading: true,
@@ -102,7 +108,10 @@ const classReducer = (state = initialState, action) => {
         case ADD_CLASS_SUCCESS:
             return {
                 ...state,
-                classes: [...state.classes, action.payload],
+                classes: [
+                    ...state.classes,
+                    action.payload
+                ],
                 isLoading: false
             }
         case ADD_CLASS_FAILURE:
@@ -111,8 +120,8 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 addingError: action.payload
             }
-        // ADD USER TO CLASS //
-            case START_ADD_USER_TO_CLASS:
+        // FIX!!! - INSTRUCTOR - Add User To Class
+        case START_ADD_USER_TO_CLASS:
             return {
                 ...state,
                 isLoading: true,
@@ -122,7 +131,10 @@ const classReducer = (state = initialState, action) => {
         case ADD_USER_TO_CLASS_SUCCESS:
             return {
                 ...state,
-                saved_classes: [...state.saved_classes, action.payload],
+                saved_classes: [
+                    ...state.saved_classes,
+                    action.payload
+                ],
                 isLoading: false
             }
         case ADD_USER_TO_CLASS_FAIL:
@@ -131,7 +143,7 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 addingError: action.payload
             }
-        // UPDATE CLASS //
+        // FIX!!! - INSTRUCTOR - Update Class
         case START_UPDATE_CLASS_CALL:
             return {
                 ...state,
@@ -153,7 +165,7 @@ const classReducer = (state = initialState, action) => {
                     ...state.classes
                 ]
             }
-        // DELETE CLASS //
+        // FIX!!! - INSTRUCTOR - Delete Class
         case START_DELETE_CLASS_CALL:
             return {
                 ...state,

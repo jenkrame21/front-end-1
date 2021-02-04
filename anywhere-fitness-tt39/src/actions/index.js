@@ -1,52 +1,52 @@
 import axiosWithAuth from '../utils/axiosWithAuth';
 
-// Login User Call
+// userReducer
+// USER/INSTRUCTOR - Login/Logout
 export const START_USER_CALL = "START_POST_LOGIN_CALL";
 export const POST_USER_SUCCESS = "POST_LOGIN_SUCCESS";
 export const POST_USER_FAILURE = "POST_LOGIN_FAILURE";
 export const USER_LOGOUT = "USER_LOGOUT";
 
-// Get All Classes Call
+// classReducer
+// USER/INSTRUCTOR - Get All Classes
 export const START_GET_CLASSES_CALL = "START_GET_CLASSES_CALL";
 export const GET_CLASSES_SUCCESS = "GET_CLASSES_SUCCESS";
 export const GET_CLASSES_FAILURE = "GET_CLASSES_FAILURE";
 
-// Get Class by User ID Call
+// USER/INSTRUCTOR(?) - Get Class by User ID
 export const GET_CLASS_BY_USER_ID_CALL = "GET_CLASS_BY_USER_ID_CALL";
 export const GET_CLASS_BY_USER_ID_SUCCESS = "GET_CLASS_BY_USER_ID_SUCCESS";
 export const GET_CLASS_BY_USER_ID_FAILURE = "GET_CLASS_BY_USER_ID_FAILURE";
 
-// Get Users by Class ID Call
+// USER/INSTRUCTOR(?) - Get Users by Class ID
 export const GET_USERS_BY_CLASS_BY_ID_CALL = "GET_USERS_BY_CLASS_BY_ID_CALL";
 export const GET_USERS_BY_CLASS_BY_ID_SUCCESS = "GET_USERS_BY_CLASS_BY_ID_SUCCESS";
 export const GET_USERS_BY_CLASS_BY_ID_FAILURE = "GET_USERS_BY_CLASS_BY_ID_FAILURE";
 
-// Add New Class Call
+// INSTRUCTOR - Add New Class
 export const START_ADDING_CLASS = "START_ADDING_CLASS";
 export const ADD_CLASS_SUCCESS = "ADD_CLASS_SUCCESS";
 export const ADD_CLASS_FAILURE = "ADD_CLASS_FAILURE";
 
-// Add User To Class
-
+// INSTRUCTOR - Add User To Class
 export const START_ADD_USER_TO_CLASS = "START_ADD_USER_TO_CLASS"
 export const ADD_USER_TO_CLASS_SUCCESS = "ADD_USER_TO_CLASS_SUCCESS"
 export const ADD_USER_TO_CLASS_FAIL = "ADD_USER_TO_CLASS_FAIL"
 // export const INCREMENT
 
-
-// Update Class Call
+// INSTRUCTOR - Update Class
 export const START_UPDATE_CLASS_CALL = "START_UPDATE_CLASS_CALL";
 export const UPDATE_CLASS_SUCCESS = "UPDATE_CLASS_SUCCESS";
 export const UPDATE_CLASS_FAILURE = "UPDATE_CLASS_FAILURE";
 
-// Delete Class Call
+// INSTRUCTOR - Delete Class
 export const START_DELETE_CLASS_CALL = "START_DELETE_CLASS_CALL";
 export const DELETE_CLASS_SUCCESS = "DELETE_CLASS_SUCCESS";
 export const DELETE_CLASS_FAILURE = "DELETE_CLASS_FAILURE";
 
-// Login action:
+// USER/INSTRUCTOR - Login action:
 export const postLogin = (login) => (dispatch) => {
-    // removes current token, if previously logged in
+    // removes current token and userInfo, if previously logged in
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('userInfo');
     dispatch({ type: START_USER_CALL });
@@ -57,16 +57,16 @@ export const postLogin = (login) => (dispatch) => {
             //setting token and userInfo to local storage
             window.localStorage.setItem('token', res.data.token);
             window.localStorage.setItem('userInfo', JSON.stringify(res.data.user))
-            console.log("Post User Success: ", res.data.user.role);
+            // console.log("Post User Success: ", res.data.user.role);
             dispatch({ type: POST_USER_SUCCESS, payload: res.data.user });
         })
         .catch((err) => {
-            console.log("Post User Failure: ", err.message);
+            // console.log("Post User Failure: ", err.message);
             dispatch({ type: POST_USER_FAILURE, payload: err.message });
         });
 };
 
-// Logout action:
+// USER/INSTRUCTOR - Logout action:
 export const logout = () => (dispatch) => {
     //Removing token and user Info
     window.localStorage.removeItem('token');
@@ -74,7 +74,7 @@ export const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT });
 }
 
-// Signup action:
+// USER/INSTRUCTOR - Signup action:
 export const postSignup = (signup) => (dispatch) => {
     dispatch({ type: START_USER_CALL });
 
@@ -91,7 +91,7 @@ export const postSignup = (signup) => (dispatch) => {
         });
 };
 
-// Get all classes action:
+// USER/INSTRUCTOR - Get all classes action:
 export const getClasses = () => (dispatch) => {
     dispatch({ type: START_GET_CLASSES_CALL });
 
@@ -107,7 +107,7 @@ export const getClasses = () => (dispatch) => {
         });
 };
 
-// Get Class by User id action:
+// USER/INSTRUCTOR(?) - Get Class by User ID action:
 export const getClassByUserId = (id) => (dispatch) => {
     dispatch({ type: GET_CLASS_BY_USER_ID_CALL });
 
@@ -122,7 +122,8 @@ export const getClassByUserId = (id) => (dispatch) => {
             dispatch({ type: GET_CLASS_BY_USER_ID_FAILURE, payload: err.message });
         });
 };
-// Get Users by Class id action:
+
+// USER/INSTRUCTOR(?) - Get Users by Class ID action:
 export const getUsersByClassById = (id) => (dispatch) => {
     dispatch({ type: GET_USERS_BY_CLASS_BY_ID_CALL });
 
@@ -138,7 +139,7 @@ export const getUsersByClassById = (id) => (dispatch) => {
         });
 };
 
-// Add new class action:
+// INSTRUCTOR - Add new class action:
 export const postClass = (newClass) => (dispatch) => {
     dispatch({ type: START_ADDING_CLASS });
 
@@ -154,7 +155,7 @@ export const postClass = (newClass) => (dispatch) => {
         });
 };
 
-// Add User to Class action:
+// USER - Add user to class action:
 export const addUserToClass = (idObject) => (dispatch) => {
     dispatch({ type: START_ADD_USER_TO_CLASS });
     axiosWithAuth()
@@ -171,7 +172,7 @@ export const addUserToClass = (idObject) => (dispatch) => {
 };
 
 
-// Update class action:
+// INSTRUCTOR - Update class action:
 export const updateClass = (id) => (dispatch) => {
     dispatch({ type: START_UPDATE_CLASS_CALL })
 
@@ -187,8 +188,7 @@ export const updateClass = (id) => (dispatch) => {
         })
 };
 
-//
-// Delete class action:
+// INSTRUCTOR - Delete class action:
 export const deleteClass = (id) => (dispatch) => {
     dispatch({ type: START_DELETE_CLASS_CALL });
 
@@ -203,7 +203,8 @@ export const deleteClass = (id) => (dispatch) => {
             dispatch({ type: DELETE_CLASS_FAILURE })
         });
 };
-// Delete User From class action:
+
+// USER - Delete user from class action:
 export const deleteUserClass = (id) => (dispatch) => {
     dispatch({ type: START_DELETE_CLASS_CALL });
 

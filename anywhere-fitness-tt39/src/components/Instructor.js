@@ -1,12 +1,21 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import AddClassForm from './AddClassForm';
 import ClassesList from './ClassesList';
+import ClassDetails from './ClassDetails';
 
 const Instructor = () => {
   return (
     <div>
-      <AddClassForm />
-      <ClassesList />
+      <Route exact path='/instructor'>
+        <AddClassForm />
+      </Route>
+      <Route exact path='/instructor'>
+        <ClassesList />
+      </Route>
+      <Route path='/instructor/class/:classid'>
+        <ClassDetails/>
+      </Route>
     </div>
   )
 }
