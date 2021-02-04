@@ -250,5 +250,9 @@ function AddClassForm(props) {
     </StyledDiv>
   )
 }
-
-export default connect(null, { postClass })(AddClassForm)
+const mapStateToProps = (state) => {
+  return {
+    
+  }
+}
+export default connect(mapStateToProps, { postClass })(AddClassForm)

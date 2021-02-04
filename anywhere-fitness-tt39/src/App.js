@@ -17,7 +17,6 @@ function App(props) {
         <PrivateRoute path='/instructor' component={Instructor} />
         <PrivateRoute path='/user' component={User} />
         <Route path='/about' component={AboutUs}/>
-
         <Route path='/'>
           <Home />
         </Route>
