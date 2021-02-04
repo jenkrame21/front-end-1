@@ -11,6 +11,7 @@ import Home from './components/Home';
 import AddClassForm from './components/AddClassForm'
 import User from './components/User';
 import Instructor from './components/Instructor';
+import SearchBar from './components/SearchBar';
 
 
 function App() {
