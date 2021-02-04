@@ -4,11 +4,14 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 export const START_USER_CALL = "START_POST_LOGIN_CALL";
 export const POST_USER_SUCCESS = "POST_LOGIN_SUCCESS";
 export const POST_USER_FAILURE = "POST_LOGIN_FAILURE";
+export const USER_LOGOUT = "USER_LOGOUT";
 
 // Get Class Call
 export const START_GET_CLASSES_CALL = "START_GET_CLASSES_CALL";
 export const GET_CLASSES_SUCCESS = "GET_CLASSES_SUCCESS";
 export const GET_CLASSES_FAILURE = "GET_CLASSES_FAILURE";
+export const GET_CLASS_BY_ID_SUCCESS = "GET_CLASS_BY_ID_SUCCESS";
+export const GET_CLASS_BY_ID_FAILURE = "GET_CLASS_BY_ID_FAILURE";
 
 // Post Class Call
 export const START_ADDING_CLASS = "START_ADDING_CLASS";
@@ -27,37 +30,44 @@ export const DELETE_CLASS_FAILURE = "DELETE_CLASS_FAILURE";
 
 // Login action:
 export const postLogin = (login) => (dispatch) => {
+    // removes current token, if previously logged in
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userInfo');
     dispatch({ type: START_USER_CALL });
-    
-    // Add axios
+
     axiosWithAuth()
         .post('/auth/login', login)
         .then((res) => {
-            localStorage.setItem('token', res.data.token);
+            //setting token and userInfo to local storage
+            window.localStorage.setItem('token', res.data.token);
+            window.localStorage.setItem('userInfo', JSON.stringify(res.data.user))
             console.log("Post User Success: ", res.data.user.role);
             dispatch({ type: POST_USER_SUCCESS, payload: res.data.user });
-            if (res.data.user.role === 'client') {
-                window.location.href = '/user';
-            } else if (res.data.user.role === 'instructor') {
-                window.location.href = '/instructor';
-            }
         })
         .catch((err) => {
             console.log("Post User Failure: ", err.message);
             dispatch({ type: POST_USER_FAILURE, payload: err.message });
         });
 };
+
+// Logout action:
+export const logout = () => (dispatch) => {
+    //Removing token and user Info
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userInfo');
+    dispatch({ type: USER_LOGOUT });
+}
 
 // Register action:
 export const postSignup = (signup) => (dispatch) => {
     dispatch({ type: START_USER_CALL });
 
-    // Add axios
     axiosWithAuth()
         .post('/auth/register', signup)
         .then((res) => {
             console.log("Post User Success: ", res.data);
             dispatch({ type: POST_USER_SUCCESS, payload: res.data });
+            window.location.href = '/login'
         })
         .catch((err) => {
             console.log("Post User Failure: ", err.message);
@@ -65,19 +75,35 @@ export const postSignup = (signup) => (dispatch) => {
         });
 };
 
-// Get classes action:
+// Get all classes action:
 export const getClasses = () => (dispatch) => {
     dispatch({ type: START_GET_CLASSES_CALL });
 
     axiosWithAuth()
         .get('/classes')
         .then((res) => {
-            // console.log("Get Classes Action Success: ", res);
+            // console.log("Get All Classes Action Success: ", res.data);
             dispatch({ type: GET_CLASSES_SUCCESS, payload: res.data });
         })
         .catch((err) => {
             console.log("Get Classes Action Error: ", err.message);
             dispatch({ type: GET_CLASSES_FAILURE, payload: err.message });
+        });
+};
+
+// Get class by id action:
+export const getClassById = (id) => (dispatch) => {
+    dispatch({ type: START_GET_CLASSES_CALL });
+
+    axiosWithAuth()
+        .get(`/user_classes/${id}`)
+        .then((res) => {
+            console.log("Get Class by id Success: ", res.data);
+            // dispatch({ type: , payload: res.data.classes.classes.id.class_id })
+        })
+        .catch((err) => {
+            console.log("Get Class by id Failure: ", err.message);
+            // dispatch({ type: , payload: err.message });
         });
 };
 
@@ -113,11 +139,11 @@ export const updateClass = (id) => (dispatch) => {
         })
 };
 
+//
 // Delete class action:
 export const deleteClass = (id) => (dispatch) => {
     dispatch({ type: START_DELETE_CLASS_CALL });
 
-    // Add axios
     axiosWithAuth()
         .delete(`/classes/${id}`)
         .then((res) => {

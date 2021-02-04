@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
 import * as yup from 'yup';
 import styled from 'styled-components';
 import schema from '../validation/signUpFormSchema';
 import { connect } from 'react-redux';
 import { postSignup } from '../actions/index';
-import { useHistory } from 'react-router-dom';
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -82,9 +80,17 @@ const defaultErrors = {
 
 function SignUpForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
-  // const [users, setUsers] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
+
+  useEffect(() => {
+    if (props.role === 'client'){
+      props.push('/user')
+    } else if (props.role === 'instructor'){
+      props.push('/instructor')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[props.role])
 
   const validate = (inputName, inputValue) => {
     yup
@@ -108,23 +114,9 @@ function SignUpForm(props) {
     })
   }
 
-  const { push } = useHistory();
-
   const postNewUser = (newUser) => {
-    // axios
-    //   .post('https://reqres.in/api/users', newUser)
-    //   .then((res) => {
-    //     setUsers([res.data, ...users])
-    //     setFormValues(initialValues)
-    //     debugger
-    //   })
-    //   .catch((err) => {
-    //     console.error(err)
-    //     debugger
-    //   })
     props.postSignup(newUser);
     setFormValues(initialValues);
-    push('/login');
   }
 
   const onSubmit = (evt) => {

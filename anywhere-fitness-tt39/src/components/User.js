@@ -4,7 +4,7 @@ import ClassesList from './ClassesList';
 const User = () => {
   return (
     <div>
-      <ClassesList />
+        <ClassesList />
     </div>
   )
 }
