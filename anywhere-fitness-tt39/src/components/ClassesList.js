@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getClasses } from '../actions/index'
 import { connect } from 'react-redux'
-import Class from './Class'
+import ClassSimple from './ClassSimple'
 import SearchBar from './SearchBar'
 
 const ClassesList = (props) => {
@@ -27,7 +27,7 @@ const ClassesList = (props) => {
       { !useSearch && 
         (<div className="classes-list">
           {props.classes.map((item) => {
-            return <Class item={item} key={item.class_id} />
+            return <ClassSimple item={item} key={item.class_id} />
           })}
         </div>)
       }

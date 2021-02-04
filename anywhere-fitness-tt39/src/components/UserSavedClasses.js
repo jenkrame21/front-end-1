@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getClassById } from '../actions/index';
+import { getClassByUserId } from '../actions/index';
 
-const UserSavedClasses = ({ user_id, saved_classes, getClassById }) => {
+const UserSavedClasses = ({ user_id, saved_classes, getClassByUserId }) => {
 
     useEffect(() => {
-        getClassById(user_id)
+        getClassByUserId(user_id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -28,4 +28,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, { getClassById })(UserSavedClasses);
+export default connect(mapStateToProps, { getClassByUserId })(UserSavedClasses);

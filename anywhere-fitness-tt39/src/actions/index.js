@@ -1,6 +1,6 @@
 import axiosWithAuth from '../utils/axiosWithAuth';
 
-// Post User Call
+// Login User Call
 export const START_USER_CALL = "START_POST_LOGIN_CALL";
 export const POST_USER_SUCCESS = "POST_LOGIN_SUCCESS";
 export const POST_USER_FAILURE = "POST_LOGIN_FAILURE";
@@ -12,14 +12,27 @@ export const GET_CLASSES_SUCCESS = "GET_CLASSES_SUCCESS";
 export const GET_CLASSES_FAILURE = "GET_CLASSES_FAILURE";
 
 // Get Class by User ID Call
-export const GET_CLASS_BY_ID_CALL = "GET_CLASS_BY_ID_CALL";
-export const GET_CLASS_BY_ID_SUCCESS = "GET_CLASS_BY_ID_SUCCESS";
-export const GET_CLASS_BY_ID_FAILURE = "GET_CLASS_BY_ID_FAILURE";
+export const GET_CLASS_BY_USER_ID_CALL = "GET_CLASS_BY_USER_ID_CALL";
+export const GET_CLASS_BY_USER_ID_SUCCESS = "GET_CLASS_BY_USER_ID_SUCCESS";
+export const GET_CLASS_BY_USER_ID_FAILURE = "GET_CLASS_BY_USER_ID_FAILURE";
 
-// Post Class Call
+// Get Users by Class ID Call
+export const GET_USERS_BY_CLASS_BY_ID_CALL = "GET_USERS_BY_CLASS_BY_ID_CALL";
+export const GET_USERS_BY_CLASS_BY_ID_SUCCESS = "GET_USERS_BY_CLASS_BY_ID_SUCCESS";
+export const GET_USERS_BY_CLASS_BY_ID_FAILURE = "GET_USERS_BY_CLASS_BY_ID_FAILURE";
+
+// Add New Class Call
 export const START_ADDING_CLASS = "START_ADDING_CLASS";
 export const ADD_CLASS_SUCCESS = "ADD_CLASS_SUCCESS";
 export const ADD_CLASS_FAILURE = "ADD_CLASS_FAILURE";
+
+// Add User To Class
+
+export const START_ADD_USER_TO_CLASS = "START_ADD_USER_TO_CLASS"
+export const ADD_USER_TO_CLASS_SUCCESS = "ADD_USER_TO_CLASS_SUCCESS"
+export const ADD_USER_TO_CLASS_FAIL = "ADD_USER_TO_CLASS_FAIL"
+// export const INCREMENT
+
 
 // Update Class Call
 export const START_UPDATE_CLASS_CALL = "START_UPDATE_CLASS_CALL";
@@ -61,7 +74,7 @@ export const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT });
 }
 
-// Register action:
+// Signup action:
 export const postSignup = (signup) => (dispatch) => {
     dispatch({ type: START_USER_CALL });
 
@@ -94,23 +107,38 @@ export const getClasses = () => (dispatch) => {
         });
 };
 
-// Get class by id action:
-export const getClassById = (id) => (dispatch) => {
-    dispatch({ type: GET_CLASS_BY_ID_CALL });
+// Get Class by User id action:
+export const getClassByUserId = (id) => (dispatch) => {
+    dispatch({ type: GET_CLASS_BY_USER_ID_CALL });
 
     axiosWithAuth()
-        .get(`/user_classes/${id}`)
+        .get(`/user_classes/user/${id}`)
         .then((res) => {
             console.log("Get Class by id Success: ", res.data);
-            dispatch({ type: GET_CLASS_BY_ID_SUCCESS, payload: res.data });
+            dispatch({ type: GET_CLASS_BY_USER_ID_SUCCESS, payload: res.data });
         })
         .catch((err) => {
             console.log("Get Class by id Failure: ", err.message);
-            dispatch({ type: GET_CLASS_BY_ID_FAILURE, payload: err.message });
+            dispatch({ type: GET_CLASS_BY_USER_ID_FAILURE, payload: err.message });
+        });
+};
+// Get Users by Class id action:
+export const getUsersByClassById = (id) => (dispatch) => {
+    dispatch({ type: GET_USERS_BY_CLASS_BY_ID_CALL });
+
+    axiosWithAuth()
+        .get(`/user_classes/user/${id}`)
+        .then((res) => {
+            console.log("Get Class by id Success: ", res.data);
+            dispatch({ type: GET_USERS_BY_CLASS_BY_ID_SUCCESS, payload: res.data });
+        })
+        .catch((err) => {
+            console.log("Get Class by id Failure: ", err.message);
+            dispatch({ type: GET_USERS_BY_CLASS_BY_ID_FAILURE, payload: err.message });
         });
 };
 
-// Post new class action:
+// Add new class action:
 export const postClass = (newClass) => (dispatch) => {
     dispatch({ type: START_ADDING_CLASS });
 
@@ -125,6 +153,23 @@ export const postClass = (newClass) => (dispatch) => {
             dispatch({ type: ADD_CLASS_FAILURE, payload: err.message });
         });
 };
+
+// Add User to Class action:
+export const addUserToClass = (idObject) => (dispatch) => {
+    dispatch({ type: START_ADD_USER_TO_CLASS });
+    axiosWithAuth()
+        .post('/user_classes', idObject)
+        .then((res) => {
+            dispatch({ type: ADD_USER_TO_CLASS_SUCCESS, payload: res.data.data });
+            // If time axios to increase attendees
+        })
+        //Finish this later
+        .catch((err) => {
+            console.log(err)
+            dispatch({ type: ADD_USER_TO_CLASS_FAIL, payload: err });
+        });
+};
+
 
 // Update class action:
 export const updateClass = (id) => (dispatch) => {
@@ -145,6 +190,21 @@ export const updateClass = (id) => (dispatch) => {
 //
 // Delete class action:
 export const deleteClass = (id) => (dispatch) => {
+    dispatch({ type: START_DELETE_CLASS_CALL });
+
+    axiosWithAuth()
+        .delete(`/classes/${id}`)
+        .then((res) => {
+            console.log("Delete Class Success: ", res.data);
+            dispatch({ type: DELETE_CLASS_SUCCESS })
+        })
+        .catch((err) => {
+            console.log("Delete Class Failure: ", err.message);
+            dispatch({ type: DELETE_CLASS_FAILURE })
+        });
+};
+// Delete User From class action:
+export const deleteUserClass = (id) => (dispatch) => {
     dispatch({ type: START_DELETE_CLASS_CALL });
 
     axiosWithAuth()
