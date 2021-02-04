@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { addUserToClass } from '../actions'
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import { deleteClass, deleteUserClass } from '../actions';
 
-const Class = ({ allClasses, addUserToClass, userId, role }) => {
+const Class = ({ allClasses, addUserToClass, userId, role, deleteClass, deleteUserClass }) => {
     // Pulling classid from URL
     const { classid } = useParams();
     const [item, setItem] = useState({})
-    // const getClassInfo = () => {
-    // }
+    const { push } = useHistory()
+    
+    //retrieves individual class info
     useEffect(() =>{
         axiosWithAuth()
             .get(`/classes/${classid}`)
@@ -18,11 +20,8 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
                 console.log('in ue: ', res);
             })
             .catch(err => console.log('error getting class info: ', err));
-        // getClassInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
-
-    // console.log('this is the item: ', item)
 
     const idObject = {
         user_id: userId,
@@ -33,6 +32,19 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
         console.log(idObject)
         addUserToClass(idObject)
     }
+
+    const handleDeleteClick = e => {
+        if (role === 'client') {
+            deleteUserClass();
+        } else {
+            deleteClass(classid);
+            push('/instructor')
+        }
+    }
+    const handleUpdateClick = e =>{
+        push(`/instructor/update/${classid}`)
+    }
+
     if (item === {}) {
         return <h1>Loading...</h1>
     }
@@ -113,9 +125,9 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
                 }
                 {
                     (role === 'instructor') &&
-                    <button>Update Class</button>
+                    <button onClick={handleUpdateClick}>Update Class</button>
                 }
-                <button className="delete-button">Delete Class</button>
+                <button  onClick={handleDeleteClick} className="delete-button">Delete Class</button>
             </div>
         </div>
     )
@@ -129,4 +141,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { addUserToClass }) (Class);
+export default connect(mapStateToProps, { addUserToClass, deleteClass, deleteUserClass }) (Class);

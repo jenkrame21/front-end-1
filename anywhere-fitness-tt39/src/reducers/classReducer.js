@@ -169,16 +169,17 @@ const classReducer = (state = initialState, action) => {
         case START_DELETE_CLASS_CALL:
             return {
                 ...state,
-                classes: [
-                    ...state.classes
-                ]
+                isLoading: true,
+                loadingError: '',
+                addingError: ''
             }
         case DELETE_CLASS_SUCCESS:
             return {
                 ...state,
-                classes: [
-                    ...state.classes
-                ]
+                isLoading: false,
+                classes: state.classes.filter(item=> {
+                    return item.class_id !== action.payload;
+                })
             }
         case DELETE_CLASS_FAILURE:
             return {
