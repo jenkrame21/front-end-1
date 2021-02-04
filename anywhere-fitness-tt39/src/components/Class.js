@@ -1,15 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 const Class = ({ item }) => {
-    const history = useHistory();
-
-    // Need ability to select class to add to signed up list
-
-    const handleSelectClass = (e) => {
-        history.push('/user_classes')
-        
-    };
 
     return(
         <div className="class-card">
@@ -74,7 +65,7 @@ const Class = ({ item }) => {
                 <p>{item.max_size}</p>
             </div>
 
-            <button onClick={handleSelectClass}>Select Class</button>
+            <button>Save Class</button>
         </div>
     )
 };

@@ -7,13 +7,8 @@ import AboutUs from './components/AboutUs';
 import Home from './components/Home';
 import User from './components/User';
 import Instructor from './components/Instructor';
-import SearchBar from './components/SearchBar';
-import UserSavedClasses from './components/UserSavedClasses';
-
-
 
 function App(props) {
-
 
   return (
     <div className="App">
@@ -22,7 +17,6 @@ function App(props) {
         <PrivateRoute path='/instructor' component={Instructor} />
         <PrivateRoute path='/user' component={User} />
         <Route path='/about' component={AboutUs}/>
-
         <Route path='/'>
           <Home />
         </Route>
