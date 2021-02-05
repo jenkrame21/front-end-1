@@ -3,8 +3,9 @@ import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/addClassFormSchema'
 import { connect } from 'react-redux';
-import { postClass } from '../actions';
-
+import { updateClass } from '../actions';
+import { useParams, useHistory } from 'react-router-dom';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
@@ -61,7 +62,7 @@ const StyledBtn = styled.button`
 
 const initialValues = {
   name: '',
-  instructor_username: '',
+  instructor_username: '', //change to match instructor_username
   type: '',
   start_time: '',
   date: '',
@@ -84,12 +85,26 @@ const defaultErrors = {
   max_size: '',
 }
 
-function AddClassForm(props) {
-  const [formValues, setFormValues] = useState(initialValues)
-  // const [classes, setClasses] = useState([])
+function UpdateClassForm(props) {
+  const [formValues, setFormValues] = useState({})
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
+  const { classid } = useParams();
+  const { push } = useHistory();
+  
 
+  useEffect(() =>{
+    axiosWithAuth()
+        .get(`/classes/${classid}`)
+        .then(res => {
+            setFormValues(res.data);
+            console.log('in update: ', res.data);
+        })
+        .catch(err => console.log('error getting class info: ', err));
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[])
+
+  console.log('these are the values: ', formValues)
   const validate = (inputName, inputValue) => {
     yup
       .reach(schema, inputName)
@@ -112,23 +127,14 @@ function AddClassForm(props) {
     })
   }
 
-  const postNewClass = (newClass) => {
-    // axios
-    //   .post('https://reqres.in/api/users', newClass)
-    //   .then((res) => {
-    //     setClasses([res.data, ...classes])
-    //     setFormValues(initialValues)
-    //   })
-    //   .catch((err) => {
-    //     console.error(err)
-    //     debugger
-    //   })
-    props.postClass(newClass);
+  const updateTheClass = (update) => {
+    props.updateClass(classid, update);
+    push('/instructor')
   }
 
   const onSubmit = (evt) => {
     evt.preventDefault()
-    const newClass = {
+    const updatedClass = {
       name: formValues.name.trim(),
       type: formValues.type.trim(),
       start_time: formValues.start_time.trim(),
@@ -140,13 +146,18 @@ function AddClassForm(props) {
       max_size: Number(formValues.max_size),
       instructor_username: props.user
     }
-    postNewClass(newClass)
+    updateTheClass(updatedClass)
   }
   useEffect(() => {
     schema.isValid(formValues).then((valid) => {
       setButtonDisabled(!valid)
     })
   }, [formValues])
+
+  if (!formValues) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <StyledDiv>
       <StyledErr>
@@ -246,7 +257,7 @@ function AddClassForm(props) {
             onChange={onChange}
           />
         </label>
-        <StyledBtn disabled={buttonDisabled}>Enter</StyledBtn>
+        <StyledBtn disabled={buttonDisabled}>Update</StyledBtn>
       </StyledForm>
     </StyledDiv>
   )
@@ -256,4 +267,4 @@ const mapStateToProps = (state) => {
     user: state.user.user.username
   }
 }
-export default connect(mapStateToProps, { postClass })(AddClassForm)
+export default connect(mapStateToProps, { updateClass })(UpdateClassForm)

@@ -7,7 +7,7 @@ import {
     GET_CLASS_BY_USER_ID_CALL,
     GET_CLASS_BY_USER_ID_SUCCESS,
     GET_CLASS_BY_USER_ID_FAILURE,
-    // USER/INSTRUCTOR(?) - Get Users by Class ID
+    // INSTRUCTOR - Get Users by Class ID
     GET_USERS_BY_CLASS_BY_ID_CALL,
     GET_USERS_BY_CLASS_BY_ID_SUCCESS,
     GET_USERS_BY_CLASS_BY_ID_FAILURE,
@@ -26,7 +26,11 @@ import {
     // INSTRUCTOR - Delete Class
     START_DELETE_CLASS_CALL,
     DELETE_CLASS_SUCCESS,
-    DELETE_CLASS_FAILURE
+    DELETE_CLASS_FAILURE,
+    // USER - Delete User from Class
+    START_DELETE_USER_CLASS_CALL,
+    DELETE_USER_CLASS_SUCCESS,
+    DELETE_USER_CLASS_FAILURE
 } from '../actions/index';
 
 const initialState = {
@@ -78,12 +82,13 @@ const classReducer = (state = initialState, action) => {
                 isLoading: false,
                 loadingError: action.payload
             }
-        // FIX!!! - USER/INSTRUCTOR(?) - Get Users by Class ID
+        // INSTRUCTOR - Get Users by Class ID
         case GET_USERS_BY_CLASS_BY_ID_CALL:
             return {
                 ...state,
                 isLoading: true,
-                loadingError: ''
+                loadingError: '',
+                class_attendees: []
             }
         case GET_USERS_BY_CLASS_BY_ID_SUCCESS:
             return {
@@ -165,27 +170,49 @@ const classReducer = (state = initialState, action) => {
                     ...state.classes
                 ]
             }
-        // FIX!!! - INSTRUCTOR - Delete Class
+        // INSTRUCTOR - Delete Class
         case START_DELETE_CLASS_CALL:
             return {
                 ...state,
-                classes: [
-                    ...state.classes
-                ]
+                isLoading: true,
+                loadingError: '',
+                addingError: ''
             }
         case DELETE_CLASS_SUCCESS:
             return {
                 ...state,
-                classes: [
-                    ...state.classes
-                ]
+                isLoading: false,
+                classes: state.classes.filter(item=> {
+                    return item.class_id !== action.payload;
+                })
             }
         case DELETE_CLASS_FAILURE:
             return {
                 ...state,
-                classes: [
-                    ...state.classes
-                ]
+                isLoading: false,
+                addingError: action.payload
+            }
+        // USER - Delete User from Class
+        case START_DELETE_USER_CLASS_CALL:
+            return {
+                ...state,
+                isLoading: true,
+                loadingError: '',
+                addingError: ''
+            }
+        case DELETE_USER_CLASS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                saved_classes: state.saved_classes.filter(item=> {
+                    return item.class_id !== action.payload;
+                })
+            }
+        case DELETE_USER_CLASS_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                addingError: action.payload
             }
         default:
             return state

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { addUserToClass } from '../actions'
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import { deleteClass, getUsersByClassById } from '../actions';
 
-const Class = ({ allClasses, addUserToClass, userId, role }) => {
+const Class = ({ addUserToClass, userId, role, deleteClass, getUsersByClassById, classAttendees }) => {
     // Pulling classid from URL
     const { classid } = useParams();
     const [item, setItem] = useState({})
-    // const getClassInfo = () => {
-    // }
+    const { push } = useHistory()
+    
+    //retrieves individual class info
     useEffect(() =>{
         axiosWithAuth()
             .get(`/classes/${classid}`)
@@ -18,11 +20,14 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
                 console.log('in ue: ', res);
             })
             .catch(err => console.log('error getting class info: ', err));
-        // getClassInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    // console.log('this is the item: ', item)
+    useEffect(()=> {
+        if (role === 'instructor') {
+            getUsersByClassById(classid)
+        }
+    },[])
 
     const idObject = {
         user_id: userId,
@@ -32,7 +37,17 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
         e.preventDefault();
         console.log(idObject)
         addUserToClass(idObject)
+        push('/user');
     }
+
+    const handleDeleteClick = e => {
+        deleteClass(classid);
+        push('/instructor')
+    }
+    const handleUpdateClick = e =>{
+        push(`/instructor/update/${classid}`)
+    }
+
     if (item === {}) {
         return <h1>Loading...</h1>
     }
@@ -100,6 +115,16 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
             </div>
 
             <hr/>
+            <div className="seperate">
+                <h3>Who's Attending:</h3>
+                {classAttendees.map(user => {
+                    return(
+                        <p key={user.user_id}>{user.first_name} {user.last_name}, </p>
+                    )
+                })}
+            </div>
+
+            <hr/>
 
             <div className="seperate">
                 <h3>Max Class Size:</h3>
@@ -113,9 +138,11 @@ const Class = ({ allClasses, addUserToClass, userId, role }) => {
                 }
                 {
                     (role === 'instructor') &&
-                    <button>Update Class</button>
+                    <button onClick={handleUpdateClick}>Update Class</button>
                 }
-                <button className="delete-button">Delete Class</button>
+                {   (role === 'instructor') &&
+                    <button  onClick={handleDeleteClick} className="delete-button">Delete Class</button>
+                }
             </div>
         </div>
     )
@@ -125,8 +152,9 @@ const mapStateToProps = state => {
     return {
         userId: state.user.user.id,
         allClasses: state.classes.classes,
-        role: state.user.user.role
+        role: state.user.user.role,
+        classAttendees: state.classes.class_attendees
     }
 }
 
-export default connect(mapStateToProps, { addUserToClass }) (Class);
+export default connect(mapStateToProps, { addUserToClass, deleteClass, getUsersByClassById }) (Class);
