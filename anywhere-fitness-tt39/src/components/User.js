@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ClassesList from './ClassesList';
 import { Route } from 'react-router-dom';
 import UserSavedClasses from './UserSavedClasses';

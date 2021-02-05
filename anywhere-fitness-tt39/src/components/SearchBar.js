@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { getClasses } from '../actions/index'
-import axios from 'axios'
-import ClassesList from './ClassesList';
+import React, { useState} from 'react'
 import ClassSimple from './ClassSimple';
 
 export default function SearchBar(props) {
   const [search, setSearch] = useState('')
+  // eslint-disable-next-line
   const [classes, setClasses] = useState(props.classes || [])
   const [dropDown, setDropDown] = useState('name')
   props.setUseSearch(search) 
@@ -57,6 +55,7 @@ export default function SearchBar(props) {
         <option value="max_size">Max Size</option>
       </select>
       {classes
+      // eslint-disable-next-line
         .filter((cla) => {
           if (search === '') {
             return null

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
-import styled from 'styled-components'
 import schema from '../validation/signUpFormSchema'
 import { connect } from 'react-redux'
 import { postSignup } from '../actions/index'
-import { Form, Button, Col } from 'react-bootstrap'
+import { Form, Button, Col} from 'react-bootstrap'
 
 // const StyledDiv = styled.div`
 //   box-sizing: border-box;
@@ -206,7 +205,6 @@ function SignUpForm(props) {
                 value={formValues.password}
                 onChange={onChange}
                 size="sm"
-
               />
             </Form.Label>
           </Col>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/addClassFormSchema'
@@ -87,7 +86,7 @@ const defaultErrors = {
 
 function AddClassForm(props) {
   const [formValues, setFormValues] = useState(initialValues)
-  const [classes, setClasses] = useState([])
+  // const [classes, setClasses] = useState([])
   const [errors, setErrors] = useState(defaultErrors)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
