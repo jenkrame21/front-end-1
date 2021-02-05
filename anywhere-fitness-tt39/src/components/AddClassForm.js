@@ -2,60 +2,57 @@ import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/addClassFormSchema'
-import { connect } from 'react-redux';
-import { postClass } from '../actions';
-
+import { connect } from 'react-redux'
+import { postClass } from '../actions'
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  font-family: monospace;
 `
 
 const StyledErr = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  color: red;
-  font-family: monospace;
-  font-size: 0.8rem;
+  color: #fd5549;
+  text-shadow: 2px 2px black;
 `
 
 const StyledForm = styled.form`
+  border: 3px solid #fd5549;
+  width: 90%;
   display: flex;
-  flex-flow: column nowrap;
-  align-items: flex-end;
-  border: 3px solid cadetblue;
-  box-shadow: 4px 4px 2px lightblue;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  box-shadow: 4px 4px 2px #474350;
   border-radius: 45px;
   padding: 2%;
+  margin: 2% 0;
+  background-color: #FDFFFF;
   input {
-    margin: 1.5% 0 1.5%;
-    &::selection {
-      color: deepskyblue;
-    }
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-left: 2%;
   }
   label {
-    &::selection {
-      color: deepskyblue;
-    }
   }
 `
 const StyledBtn = styled.button`
-  padding: 0 5% 0;
   background-color: white;
   color: black;
-  border: 2px solid lightcoral;
+  border: 2px solid #fd5549;
   border-radius: 10px;
   font-weight: bold;
   transition: 0.4s all ease-in-out;
+  margin-bottom:1%;
   &:hover {
     color: whitesmoke;
-    background-color: lightcoral;
+    background-color: #fd5549;
+    text-shadow: 1px 1px black;
   }
   &::selection {
-    color: deepskyblue;
+    color: #fd5549;
   }
 `
 
@@ -69,7 +66,7 @@ const initialValues = {
   intensity_level: '',
   location: '',
   attendees: 1,
-  max_size: null
+  max_size: null,
 }
 
 const defaultErrors = {
@@ -123,7 +120,7 @@ function AddClassForm(props) {
     //     console.error(err)
     //     debugger
     //   })
-    props.postClass(newClass);
+    props.postClass(newClass)
   }
 
   const onSubmit = (evt) => {
@@ -138,7 +135,7 @@ function AddClassForm(props) {
       location: formValues.location.trim(),
       attendees: formValues.attendees,
       max_size: Number(formValues.max_size),
-      instructor_username: props.user
+      instructor_username: props.user,
     }
     postNewClass(newClass)
   }
@@ -161,7 +158,7 @@ function AddClassForm(props) {
       </StyledErr>
       <StyledForm onSubmit={onSubmit}>
         <label htmlFor="name">
-          Name:
+          Name
           <input
             type="text"
             name="name"
@@ -181,7 +178,7 @@ function AddClassForm(props) {
           />
         </label> */}
         <label htmlFor="type">
-          Class Type:
+          Class Type
           <input
             type="text"
             name="type"
@@ -191,17 +188,17 @@ function AddClassForm(props) {
           />
         </label>
         <label htmlFor="start_time">
-          Start Time:
+          Time
           <input
             type="text"
             name="start_time"
             value={formValues.start_time}
             onChange={onChange}
-            placeholder=""
+            placeholder="AM/PM"
           />
         </label>
         <label htmlFor="date">
-          Date:
+          Date
           <input
             type="date"
             name="date"
@@ -210,7 +207,7 @@ function AddClassForm(props) {
           />
         </label>
         <label>
-          Duration:
+          Duration
           <input
             type="number"
             name="duration"
@@ -220,16 +217,17 @@ function AddClassForm(props) {
         </label>
 
         <label>
-          Intensity:
+          Intensity
           <input
             type="text"
             name="intensity_level"
             value={formValues.intensity_level}
             onChange={onChange}
+            placeholder='High, Medium, or Low'
           />
         </label>
         <label>
-          Location:
+          Location
           <input
             type="text"
             name="location"
@@ -238,7 +236,7 @@ function AddClassForm(props) {
           />
         </label>
         <label>
-          Capacity:
+          Capacity
           <input
             type="number"
             name="max_size"
@@ -246,14 +244,14 @@ function AddClassForm(props) {
             onChange={onChange}
           />
         </label>
-        <StyledBtn disabled={buttonDisabled}>Enter</StyledBtn>
       </StyledForm>
+      <StyledBtn disabled={buttonDisabled}>Add Class!</StyledBtn>
     </StyledDiv>
   )
 }
 const mapStateToProps = (state) => {
   return {
-    user: state.user.user.username
+    user: state.user.user.username,
   }
 }
 export default connect(mapStateToProps, { postClass })(AddClassForm)

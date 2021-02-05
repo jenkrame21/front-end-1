@@ -3,62 +3,27 @@ import * as yup from 'yup'
 import schema from '../validation/signUpFormSchema'
 import { connect } from 'react-redux'
 import { postSignup } from '../actions/index'
-import { Form, Button, Col} from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
+import styled from 'styled-components'
 
-// const StyledDiv = styled.div`
-//   box-sizing: border-box;
-//   display: flex;
-//   flex-flow: column nowrap;
-//   align-items: center;
-//   font-family: monospace;
-// `
-
-// const StyledErr = styled.div`
-//   display: flex;
-//   flex-flow: column nowrap;
-//   color: red;
-//   font-family: monospace;
-//   font-size: 0.8rem;
-// `
-
-// const StyledForm = styled.form`
-//   display: flex;
-//   flex-flow: column nowrap;
-//   align-items: flex-end;
-//   border: 3px solid cadetblue;
-//   box-shadow: 4px 4px 2px lightblue;
-//   border-radius: 45px;
-//   padding: 2%;
-//   input {
-//     margin: 1.5% 0 1.5%;
-//     &::selection{
-//     color:deepskyblue;
-//   }
-//   }
-//   label{
-//     &::selection{
-//     color:deepskyblue;
-//   }
-//   }
-
-// `
-
-// const StyledBtn = styled.button`
-//   padding: 0 5% 0;
-//   background-color: white;
-//   color: black;
-//   border: 2px solid lightcoral;
-//   border-radius: 10px;
-//   font-weight: bold;
-//   transition: 0.4s all ease-in-out;
-//   &:hover {
-//     color: whitesmoke;
-//     background-color: lightcoral;
-//   }
-//   &::selection{
-//     color:deepskyblue;
-//   }
-// `
+const StyledBtn = styled.button`
+  padding: 0 5% 0;
+  background-color: white;
+  color: black;
+  border: 2px solid #fd5549;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.4s all ease-in-out;
+  &:hover {
+    color: whitesmoke;
+    background-color: #fd5549;
+    text-shadow: 1px 1px black;
+    border: 2px solid #474350;
+  }
+  &::selection {
+    color: #fd5549;
+  }
+`
 
 const initialValues = {
   first_name: '',
@@ -143,7 +108,7 @@ function SignUpForm(props) {
       <Form.Group>
         <Form.Row>
           <Col>
-            <Form.Label htmlFor="first_name">
+            <Form.Label htmlFor="first_name" className="sign-up-labels">
               First Name:
               <Form.Control
                 type="text"
@@ -152,9 +117,10 @@ function SignUpForm(props) {
                 onChange={onChange}
                 placeholder="First Name"
                 size="sm"
+                className="regular-font first-name-input"
               />
             </Form.Label>
-            <Form.Label htmlFor="last_name">
+            <Form.Label htmlFor="last_name" className="sign-up-labels">
               Last Name:
               <Form.Control
                 type="text"
@@ -163,13 +129,14 @@ function SignUpForm(props) {
                 onChange={onChange}
                 placeholder="Last Name"
                 size="sm"
+                className="regular-font"
               />
             </Form.Label>
           </Col>
         </Form.Row>
         <Form.Row>
           <Col>
-            <Form.Label htmlFor="email">
+            <Form.Label htmlFor="email" className="sign-up-labels">
               E-mail:
               <Form.Control
                 type="email"
@@ -178,11 +145,12 @@ function SignUpForm(props) {
                 onChange={onChange}
                 placeholder="example@email.com"
                 size="sm"
+                className="regular-font"
               />
             </Form.Label>
           </Col>
           <Col>
-            <Form.Label htmlFor="username">
+            <Form.Label htmlFor="username" className="sign-up-labels">
               Username:
               <Form.Control
                 type="text"
@@ -191,13 +159,14 @@ function SignUpForm(props) {
                 onChange={onChange}
                 placeholder="Min. 4 chars"
                 size="sm"
+                className="regular-font"
               />
             </Form.Label>
           </Col>
         </Form.Row>
         <Form.Row>
           <Col>
-            <Form.Label htmlFor="password">
+            <Form.Label htmlFor="password" className="sign-up-labels">
               Password:
               <Form.Control
                 type="password"
@@ -205,11 +174,12 @@ function SignUpForm(props) {
                 value={formValues.password}
                 onChange={onChange}
                 size="sm"
+                className="regular-font"
               />
             </Form.Label>
           </Col>
           <Col>
-            <Form.Label>
+            <Form.Label className="user-radio-label sign-up-labels">
               User
               <Form.Control
                 type="radio"
@@ -217,10 +187,12 @@ function SignUpForm(props) {
                 value="client"
                 checked={formValues.role === 'client'}
                 onChange={onChange}
+                className="regular-font"
+                size='sm'
               />
             </Form.Label>
 
-            <Form.Label>
+            <Form.Label className="instructor-radio-label sign-up-labels">
               Instructor
               <Form.Control
                 type="radio"
@@ -228,24 +200,28 @@ function SignUpForm(props) {
                 value="instructor"
                 checked={formValues.role === 'instructor'}
                 onChange={onChange}
+                className="regular-font"
+                size='sm'
               />
             </Form.Label>
           </Col>
         </Form.Row>
         <Form.Row>
           <Col>
-            <Button disabled={buttonDisabled}>Enter</Button>
+            <StyledBtn disabled={buttonDisabled}>Sign Up!</StyledBtn>
           </Col>
         </Form.Row>
       </Form.Group>
-      <Form.Group>
-        <div>{errors.first_name}</div>
-        <div>{errors.last_name}</div>
-        <div>{errors.email}</div>
-        <div>{errors.username}</div>
-        <div>{errors.password}</div>
-        <div>{errors.role}</div>
-      </Form.Group>
+      <div className='sign-up-errors-parent'>
+        <div className="sign-up-errors">
+          <div>{errors.first_name}</div>
+          <div>{errors.last_name}</div>
+          <div>{errors.email}</div>
+          <div>{errors.username}</div>
+          <div className="password-error">{errors.password}</div>
+          <div>{errors.role}</div>
+        </div>
+      </div>
     </Form>
   )
 }

@@ -138,7 +138,7 @@ const Class = ({ addUserToClass, userId, role, deleteClass, getUsersByClassById,
                 }
                 {
                     (role === 'instructor') &&
-                    <button onClick={handleUpdateClick}>Update Class</button>
+                    <button onClick={handleUpdateClick} className='update-button'>Update Class</button>
                 }
                 {   (role === 'instructor') &&
                     <button  onClick={handleDeleteClick} className="delete-button">Delete Class</button>

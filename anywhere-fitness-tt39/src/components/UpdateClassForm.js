@@ -60,18 +60,18 @@ const StyledBtn = styled.button`
   }
 `
 
-const initialValues = {
-  name: '',
-  instructor_username: '', //change to match instructor_username
-  type: '',
-  start_time: '',
-  date: '',
-  duration: null,
-  intensity_level: '',
-  location: '',
-  attendees: 1,
-  max_size: null
-}
+// const initialValues = {
+//   name: '',
+//   instructor_username: '', //change to match instructor_username
+//   type: '',
+//   start_time: '',
+//   date: '',
+//   duration: null,
+//   intensity_level: '',
+//   location: '',
+//   attendees: 1,
+//   max_size: null
+// }
 
 const defaultErrors = {
   name: '',

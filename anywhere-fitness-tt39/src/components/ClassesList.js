@@ -22,7 +22,7 @@ const ClassesList = (props) => {
 
   return (
     <div>
-      <h1>Classes Available:</h1>
+      <h1 className='class-list-head'>Available Classes</h1>
       <SearchBar classes={props.classes} setUseSearch={setUseSearch} />
       { !useSearch && 
         (<div className="classes-list">
