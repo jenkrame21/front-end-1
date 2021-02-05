@@ -37,8 +37,6 @@ const StyledForm = styled.form`
     border-radius: 10px;
     margin-left: 2%;
   }
-  label {
-  }
 `
 const StyledBtn = styled.button`
   background-color: white;
@@ -168,7 +166,7 @@ function UpdateClassForm(props) {
         <div>{errors.location}</div>
         <div>{errors.max_size}</div>
       </StyledErr>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm>
         <label htmlFor="name">
           Name
           <input
@@ -257,7 +255,7 @@ function UpdateClassForm(props) {
           />
         </label>
       </StyledForm>
-      <StyledBtn disabled={buttonDisabled}>Add Class!</StyledBtn>
+      <StyledBtn onClick={onSubmit} disabled={buttonDisabled}>Add Class!</StyledBtn>
     </StyledDiv>
   )
 }

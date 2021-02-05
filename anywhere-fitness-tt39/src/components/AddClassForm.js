@@ -29,7 +29,7 @@ const StyledForm = styled.form`
   border-radius: 45px;
   padding: 2%;
   margin: 2% 0;
-  background-color: #FDFFFF;
+  background-color: #fdffff;
   input {
     border: 2px solid black;
     border-radius: 10px;
@@ -45,7 +45,7 @@ const StyledBtn = styled.button`
   border-radius: 10px;
   font-weight: bold;
   transition: 0.4s all ease-in-out;
-  margin-bottom:1%;
+  margin-bottom: 1%;
   &:hover {
     color: whitesmoke;
     background-color: #fd5549;
@@ -156,7 +156,7 @@ function AddClassForm(props) {
         <div>{errors.location}</div>
         <div>{errors.max_size}</div>
       </StyledErr>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm >
         <label htmlFor="name">
           Name
           <input
@@ -223,7 +223,7 @@ function AddClassForm(props) {
             name="intensity_level"
             value={formValues.intensity_level}
             onChange={onChange}
-            placeholder='High, Medium, or Low'
+            placeholder="High, Medium, or Low"
           />
         </label>
         <label>
@@ -245,7 +245,7 @@ function AddClassForm(props) {
           />
         </label>
       </StyledForm>
-      <StyledBtn disabled={buttonDisabled}>Add Class!</StyledBtn>
+      <StyledBtn onClick={onSubmit} disabled={buttonDisabled}>Add Class!</StyledBtn>
     </StyledDiv>
   )
 }

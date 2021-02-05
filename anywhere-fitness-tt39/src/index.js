@@ -11,10 +11,7 @@ import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-
-
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, logger)));
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <React.StrictMode>
