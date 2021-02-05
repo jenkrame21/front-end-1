@@ -188,6 +188,7 @@ function SignUpForm(props) {
                 checked={formValues.role === 'client'}
                 onChange={onChange}
                 className="regular-font"
+                size='sm'
               />
             </Form.Label>
 
@@ -200,6 +201,7 @@ function SignUpForm(props) {
                 checked={formValues.role === 'instructor'}
                 onChange={onChange}
                 className="regular-font"
+                size='sm'
               />
             </Form.Label>
           </Col>

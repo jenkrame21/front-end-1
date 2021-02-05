@@ -2,28 +2,33 @@
   box-sizing: border-box;
 }
 h3 {
-  background-color: #fff;
-  color: black;
+  background-color: #226f54;
+  color: #fd5549;
+  text-shadow: 2px 2px black;
   padding: 2% 0;
   width: 200px;
   margin-right: 50px;
+  border: 3px solid #474350;
+  border-radius: 12px;
 }
 
 .App {
   text-align: center;
   font-family: staatliches;
   font-size: 1.4rem;
-  background-color: #468C98;
-  border-bottom:2px solid #fd5549;
+  background-color: #468c98;
+  border-bottom: 2px solid #fd5549;
 }
 
 .class-card {
-  background-color: rgb(13, 36, 78);
-  color: #fff;
+  background-color: white;
+  color: black;
   width: 43%;
   margin: 2% auto;
   padding: 2%;
   border-radius: 12px;
+  border: 3px solid #fd5549;
+  box-shadow: 3px 3px black;
 }
 
 .class-card button {
@@ -47,6 +52,7 @@ h3 {
   display: flex;
   align-items: center;
   margin: 1% auto;
+  /* background-color: #474350; */
 }
 
 .classes-list {
@@ -60,20 +66,31 @@ h3 {
 }
 
 .buttons button {
-  background-color: rgb(13, 36, 78);
-  color: #fff;
-  border: 2px solid #fff;
+  background-color: #226f54;
+  color: #fd5549;
+  text-shadow: 2px 2px black;
+  border: 3px solid #474350;
   transition: 0.4 ease-in-out;
+  
 }
 
-.delete-button {
+.delete-button, .update-button {
   transition: 0.4s ease-in-out;
 }
 
 .delete-button:hover {
   background-color: rgb(207, 22, 22);
   transition: 0.4s ease-in-out;
+  color:whitesmoke;
+  text-shadow: 1.5px 1.5px black;
 }
+
+.update-button:hover {
+  background-color:#fdffff;
+  transition: 0.4s ease-in-out;
+}
+
+
 
 .regular-font {
   font-family: Arial, Helvetica, sans-serif;
@@ -93,16 +110,19 @@ h3 {
   margin-left: 2%;
 }
 
-.user-label, .pass-label {
+.user-label,
+.pass-label {
   text-shadow: 1px 1px 1px whitesmoke;
 }
 
-.user-label::selection, .pass-label::selection, .sign-up-labels::selection{
+.user-label::selection,
+.pass-label::selection,
+.sign-up-labels::selection {
   color: #fd5549;
-  text-shadow:1px 1px black;
+  text-shadow: 1px 1px black;
 }
 
-.sign-up-errors{
+.sign-up-errors {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -111,7 +131,6 @@ h3 {
   color: black;
 }
 .password-error {
-
   max-width: 40%;
 }
 .sign-up-errors-parent {
@@ -123,7 +142,21 @@ h3 {
   color: #fd5549;
   text-shadow: 2px 2px 1px black;
 }
-.class-list-head::selection{
+.class-list-head::selection {
   color: #474350;
   text-shadow: 2px 2px #fd5549;
+}
+
+.search-bar,
+.drop-down {
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.search-bar{
+  margin-right: 1%;
+}
+
+.drop-down{
+  margin-left:1%;
 }

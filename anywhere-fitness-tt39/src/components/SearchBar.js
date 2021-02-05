@@ -42,8 +42,9 @@ export default function SearchBar(props) {
         placeholder="Search..."
         onChange={onChangeSearch}
         value={search}
+        className='search-bar'
       />
-      <select name="criteria" onChange={onChangeDrop} value={dropDown}>
+      <select name="criteria" onChange={onChangeDrop} value={dropDown} className='drop-down'>
         <option value="name">Name</option>
         <option value="type">Type</option>
         <option value="start_time">Start Time</option>

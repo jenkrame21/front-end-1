@@ -8,7 +8,7 @@ const Nav = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-bottom: 2px solid #fd5549;
+  border-bottom: 3px solid #fd5549;
   background-color: #fdffff;
   h1 {
     color: #fd5549;
