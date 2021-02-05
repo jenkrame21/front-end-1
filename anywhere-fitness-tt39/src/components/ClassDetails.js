@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { addUserToClass } from '../actions'
 import { useParams, useHistory } from 'react-router-dom';
 import axiosWithAuth from '../utils/axiosWithAuth';
-import { deleteClass, deleteUserClass } from '../actions';
+import { deleteClass, getUsersByClassById } from '../actions';
 
-const Class = ({ allClasses, addUserToClass, userId, role, deleteClass, deleteUserClass }) => {
+const Class = ({ addUserToClass, userId, role, deleteClass, getUsersByClassById, classAttendees }) => {
     // Pulling classid from URL
     const { classid } = useParams();
     const [item, setItem] = useState({})
@@ -23,6 +23,12 @@ const Class = ({ allClasses, addUserToClass, userId, role, deleteClass, deleteUs
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
+    useEffect(()=> {
+        if (role === 'instructor') {
+            getUsersByClassById(classid)
+        }
+    },[])
+
     const idObject = {
         user_id: userId,
         class_id: item.class_id
@@ -31,15 +37,12 @@ const Class = ({ allClasses, addUserToClass, userId, role, deleteClass, deleteUs
         e.preventDefault();
         console.log(idObject)
         addUserToClass(idObject)
+        push('/user');
     }
 
     const handleDeleteClick = e => {
-        if (role === 'client') {
-            deleteUserClass();
-        } else {
-            deleteClass(classid);
-            push('/instructor')
-        }
+        deleteClass(classid);
+        push('/instructor')
     }
     const handleUpdateClick = e =>{
         push(`/instructor/update/${classid}`)
@@ -112,6 +115,16 @@ const Class = ({ allClasses, addUserToClass, userId, role, deleteClass, deleteUs
             </div>
 
             <hr/>
+            <div className="seperate">
+                <h3>Who's Attending:</h3>
+                {classAttendees.map(user => {
+                    return(
+                        <p key={user.user_id}>{user.first_name} {user.last_name}, </p>
+                    )
+                })}
+            </div>
+
+            <hr/>
 
             <div className="seperate">
                 <h3>Max Class Size:</h3>
@@ -127,7 +140,9 @@ const Class = ({ allClasses, addUserToClass, userId, role, deleteClass, deleteUs
                     (role === 'instructor') &&
                     <button onClick={handleUpdateClick}>Update Class</button>
                 }
-                <button  onClick={handleDeleteClick} className="delete-button">Delete Class</button>
+                {   (role === 'instructor') &&
+                    <button  onClick={handleDeleteClick} className="delete-button">Delete Class</button>
+                }
             </div>
         </div>
     )
@@ -137,8 +152,9 @@ const mapStateToProps = state => {
     return {
         userId: state.user.user.id,
         allClasses: state.classes.classes,
-        role: state.user.user.role
+        role: state.user.user.role,
+        classAttendees: state.classes.class_attendees
     }
 }
 
-export default connect(mapStateToProps, { addUserToClass, deleteClass, deleteUserClass }) (Class);
+export default connect(mapStateToProps, { addUserToClass, deleteClass, getUsersByClassById }) (Class);
