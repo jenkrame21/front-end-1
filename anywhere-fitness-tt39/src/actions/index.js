@@ -44,6 +44,12 @@ export const START_DELETE_CLASS_CALL = "START_DELETE_CLASS_CALL";
 export const DELETE_CLASS_SUCCESS = "DELETE_CLASS_SUCCESS";
 export const DELETE_CLASS_FAILURE = "DELETE_CLASS_FAILURE";
 
+//USER - Delete User from Class
+export const START_DELETE_USER_CLASS_CALL = 'START_DELETE_USER_CLASS_CALL'
+export const DELETE_USER_CLASS_SUCCESS = 'DELETE_USER_CLASS_SUCCESS'
+export const DELETE_USER_CLASS_FAILURE = 'DELETE_USER_CLASS_FAILURE'
+
+
 // USER/INSTRUCTOR - Login action:
 export const postLogin = (login) => (dispatch) => {
     // removes current token and userInfo, if previously logged in
@@ -128,7 +134,7 @@ export const getUsersByClassById = (id) => (dispatch) => {
     dispatch({ type: GET_USERS_BY_CLASS_BY_ID_CALL });
 
     axiosWithAuth()
-        .get(`/user_classes/user/${id}`)
+        .get(`/user_classes/class/${id}`)
         .then((res) => {
             console.log("Get Class by id Success: ", res.data);
             dispatch({ type: GET_USERS_BY_CLASS_BY_ID_SUCCESS, payload: res.data });
@@ -200,22 +206,23 @@ export const deleteClass = (id) => (dispatch) => {
         })
         .catch((err) => {
             console.log("Delete Class Failure: ", err.message);
-            dispatch({ type: DELETE_CLASS_FAILURE })
+            dispatch({ type: DELETE_CLASS_FAILURE, payload: err.message })
         });
 };
 
 // USER - Delete user from class action:
-export const deleteUserClass = (id) => (dispatch) => {
-    dispatch({ type: START_DELETE_CLASS_CALL });
-
+export const deleteUserClass = (idObject) => (dispatch) => {
+    dispatch({ type: START_DELETE_USER_CLASS_CALL });
+    
     axiosWithAuth()
-        .delete(`/classes/${id}`)
+        .delete(`/user_classes/`, { data: idObject })
         .then((res) => {
             console.log("Delete Class Success: ", res.data);
-            dispatch({ type: DELETE_CLASS_SUCCESS })
+            dispatch({ type: DELETE_USER_CLASS_SUCCESS, payload: idObject.class_id })
         })
         .catch((err) => {
+            console.log('our id object: ', idObject)
             console.log("Delete Class Failure: ", err.message);
-            dispatch({ type: DELETE_CLASS_FAILURE })
+            dispatch({ type: DELETE_USER_CLASS_FAILURE })
         });
 };
