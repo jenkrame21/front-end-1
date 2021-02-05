@@ -13,6 +13,11 @@ const HomeDiv = styled.div`
   section {
     width: 40%;
   }
+  p::selection{
+    color: #fd5549;
+    text-shadow:1px 1px black;
+  }
+  
 `
 
 const Home = (props) => {

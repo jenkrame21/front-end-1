@@ -12,22 +12,26 @@ const Nav = styled.div`
   background-color: #fdffff;
   h1 {
     color: #fd5549;
-    text-shadow: 1.5px 2px 1px black;
+    text-shadow: 2px 2px 1px black;
   }
   nav {
     width: 30%;
-    font-family: Arial, Helvetica, sans-serif;
     margin-top: 1%;
+  }
+  p::selection, h1::selection{
+    color: #474350;
+    text-shadow: 2px 2px #fd5549;
   }
   ul {
     display: flex;
     justify-content: space-between;
-
   }
-  li {
-    text-decoration: none;
+  p{
     color: #fd5549;
-    list-style: none;
+    text-shadow: 1.5px 1.5px black;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 `
 
@@ -45,37 +49,37 @@ const NavBar = ({ loggedIn, logout, role }) => {
         <ul>
           {!loggedIn && (
             <Link to="/">
-              <li>Home</li>
+              <p>Home</p>
             </Link>
           )}
 
           {role === 'instructor' && (
             <Link to="/instructor">
-              <li>My Classes</li>
+              <p>My Classes</p>
             </Link>
           )}
           {role === 'client' && (
             <Link to="/user">
-              <li>My Classes</li>
+              <p>My Classes</p>
             </Link>
           )}
           {!loggedIn && (
             <Link to="signup">
-              <li>SignUp</li>
+              <p>SignUp</p>
             </Link>
           )}
           {!loggedIn && (
             <Link to="/login">
-              <li>Log In</li>
+              <p>Log In</p>
             </Link>
           )}
           {loggedIn && (
             <Link onClick={handleLogout}>
-              <li>Log Out</li>
+              <p>Log Out</p>
             </Link>
           )}
           <Link to="/about">
-            <li>About Us</li>
+            <p>About Us</p>
           </Link>
         </ul>
       </nav>

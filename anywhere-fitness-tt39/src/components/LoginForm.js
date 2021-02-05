@@ -15,6 +15,7 @@ const StyledDiv = styled.div`
   Button {
     transition: 0.5s all ease-in-out;
     align-items: center;
+    border: 2px solid #474350;
     border-radius: 20px;
     color: white;
     background-color: #fd5549;
@@ -22,53 +23,11 @@ const StyledDiv = styled.div`
       transform: scale(1.1);
     }
   }
+  Button::selection {
+    color: #474350;
+    text-shadow: 2px 2px #fd5549;
+  }
 `
-
-// const StyledErr = styled.div`
-//   display: flex;
-//   flex-flow: column nowrap;
-//   color: red;
-//   font-family: monospace;
-//   font-size: 0.8rem;
-// `
-
-// const StyledForm = styled.form`
-//   display: flex;
-//   flex-flow: column nowrap;
-//   align-items: flex-end;
-//   border: 3px solid cadetblue;
-//   box-shadow: 4px 4px 2px lightblue;
-//   border-radius: 45px;
-//   padding: 2%;
-//   input {
-//     margin: 1.5% 0 1.5%;
-//     &::selection {
-//       color: deepskyblue;
-//     }
-//   }
-//   label {
-//     &::selection {
-//       color: deepskyblue;
-//     }
-//   }
-// `
-
-// const StyledBtn = styled.button`
-//   padding: 0 5% 0;
-//   background-color: white;
-//   color: black;
-//   border: 2px solid lightcoral;
-//   border-radius: 10px;
-//   font-weight: bold;
-//   transition: 0.4s all ease-in-out;
-//   &:hover {
-//     color: whitesmoke;
-//     background-color: lightcoral;
-//   }
-//   &::selection {
-//     color: deepskyblue;
-//   }
-// `
 
 const initialValues = {
   username: '',
@@ -140,25 +99,26 @@ function LoginForm(props) {
       <Form onSubmit={onSubmit}>
         <Form.Group onSubmit={onSubmit}>
           <Form.Row>
-            <label htmlFor="username">
-              Username:
+            <label htmlFor="username" className="user-label">
+              Username
               <input
                 type="text"
                 name="username"
                 value={formValues.username}
                 onChange={onChange}
-                placeholder="Min. 4 chars"
+                className="regular-font logInput"
               />
             </label>
           </Form.Row>
           <Form.Row>
-            <label htmlFor="password">
-              Password:
+            <label htmlFor="password" className="pass-label">
+              Password
               <input
                 type="password"
                 name="password"
                 value={formValues.password}
                 onChange={onChange}
+                className="regular-font logInput"
               />
             </label>
           </Form.Row>
@@ -166,8 +126,8 @@ function LoginForm(props) {
         </Form.Group>
       </Form>
       <div>
-        <span>{errors.username}</span>
-        <span>{errors.password}</span>
+        <span className='sign-up-errors'>{errors.username}</span>
+        <span className='sign-up-errors'>{errors.password}</span>
       </div>
     </StyledDiv>
   )

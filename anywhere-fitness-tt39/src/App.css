@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 h3 {
   background-color: #fff;
   color: black;
@@ -8,6 +11,10 @@ h3 {
 
 .App {
   text-align: center;
+  font-family: staatliches;
+  font-size: 1.4rem;
+  background-color: #468C98;
+  border-bottom:2px solid #fd5549;
 }
 
 .class-card {
@@ -63,7 +70,60 @@ h3 {
   transition: 0.4s ease-in-out;
 }
 
-.delete-button:hover{
+.delete-button:hover {
   background-color: rgb(207, 22, 22);
   transition: 0.4s ease-in-out;
+}
+
+.regular-font {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.logInput {
+  margin-left: 2%;
+  border-radius: 20px;
+  box-shadow: 2px 2px 1px #474350;
+}
+
+.user-radio-label {
+  margin-right: 2%;
+}
+
+.instructor-radio-label {
+  margin-left: 2%;
+}
+
+.user-label, .pass-label {
+  text-shadow: 1px 1px 1px whitesmoke;
+}
+
+.user-label::selection, .pass-label::selection, .sign-up-labels::selection{
+  color: #fd5549;
+  text-shadow:1px 1px black;
+}
+
+.sign-up-errors{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  font-size: 0.8rem;
+  text-align: justify;
+  color: black;
+}
+.password-error {
+
+  max-width: 40%;
+}
+.sign-up-errors-parent {
+  display: flex;
+  max-width: 100%;
+}
+
+.class-list-head {
+  color: #fd5549;
+  text-shadow: 2px 2px 1px black;
+}
+.class-list-head::selection{
+  color: #474350;
+  text-shadow: 2px 2px #fd5549;
 }
