@@ -160,3 +160,14 @@ h3 {
 .drop-down{
   margin-left:1%;
 }
+
+.save-button {
+  transition: 0.5s all ease-out;
+}
+
+.save-button:hover{
+  transform: scale(1.1);
+  background-color: whitesmoke;
+  /* color: #474350; */
+  /* text-shadow: 1px 1px black; */
+}

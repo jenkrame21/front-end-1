@@ -12,51 +12,47 @@ const StyledDiv = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  font-family: monospace;
 `
 
 const StyledErr = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  color: red;
-  font-family: monospace;
-  font-size: 0.8rem;
+  color: #fd5549;
+  text-shadow: 2px 2px black;
 `
 
 const StyledForm = styled.form`
+  border: 3px solid #fd5549;
+  width: 90%;
   display: flex;
-  flex-flow: column nowrap;
-  align-items: flex-end;
-  border: 3px solid cadetblue;
-  box-shadow: 4px 4px 2px lightblue;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  box-shadow: 4px 4px 2px #474350;
   border-radius: 45px;
   padding: 2%;
+  margin: 2% 0;
+  background-color: #FDFFFF;
   input {
-    margin: 1.5% 0 1.5%;
-    &::selection {
-      color: deepskyblue;
-    }
-  }
-  label {
-    &::selection {
-      color: deepskyblue;
-    }
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-left: 2%;
   }
 `
 const StyledBtn = styled.button`
-  padding: 0 5% 0;
   background-color: white;
   color: black;
-  border: 2px solid lightcoral;
+  border: 2px solid #fd5549;
   border-radius: 10px;
   font-weight: bold;
   transition: 0.4s all ease-in-out;
+  margin-bottom:1%;
   &:hover {
     color: whitesmoke;
-    background-color: lightcoral;
+    background-color: #fd5549;
+    text-shadow: 1px 1px black;
   }
   &::selection {
-    color: deepskyblue;
+    color: #fd5549;
   }
 `
 
@@ -170,9 +166,9 @@ function UpdateClassForm(props) {
         <div>{errors.location}</div>
         <div>{errors.max_size}</div>
       </StyledErr>
-      <StyledForm onSubmit={onSubmit}>
+      <StyledForm>
         <label htmlFor="name">
-          Name:
+          Name
           <input
             type="text"
             name="name"
@@ -192,7 +188,7 @@ function UpdateClassForm(props) {
           />
         </label> */}
         <label htmlFor="type">
-          Class Type:
+          Class Type
           <input
             type="text"
             name="type"
@@ -202,17 +198,17 @@ function UpdateClassForm(props) {
           />
         </label>
         <label htmlFor="start_time">
-          Start Time:
+          Time
           <input
             type="text"
             name="start_time"
             value={formValues.start_time}
             onChange={onChange}
-            placeholder=""
+            placeholder="AM/PM"
           />
         </label>
         <label htmlFor="date">
-          Date:
+          Date
           <input
             type="date"
             name="date"
@@ -221,7 +217,7 @@ function UpdateClassForm(props) {
           />
         </label>
         <label>
-          Duration:
+          Duration
           <input
             type="number"
             name="duration"
@@ -231,16 +227,17 @@ function UpdateClassForm(props) {
         </label>
 
         <label>
-          Intensity:
+          Intensity
           <input
             type="text"
             name="intensity_level"
             value={formValues.intensity_level}
             onChange={onChange}
+            placeholder='High, Medium, or Low'
           />
         </label>
         <label>
-          Location:
+          Location
           <input
             type="text"
             name="location"
@@ -249,7 +246,7 @@ function UpdateClassForm(props) {
           />
         </label>
         <label>
-          Capacity:
+          Capacity
           <input
             type="number"
             name="max_size"
@@ -257,8 +254,8 @@ function UpdateClassForm(props) {
             onChange={onChange}
           />
         </label>
-        <StyledBtn disabled={buttonDisabled}>Update</StyledBtn>
       </StyledForm>
+      <StyledBtn onClick={onSubmit} disabled={buttonDisabled}>Add Class!</StyledBtn>
     </StyledDiv>
   )
 }

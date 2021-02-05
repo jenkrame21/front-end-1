@@ -134,7 +134,7 @@ const Class = ({ addUserToClass, userId, role, deleteClass, getUsersByClassById,
             <div className="buttons">
                 {
                     (role === 'client') &&
-                    <button onClick={handleSave}>Save Class</button>
+                    <button onClick={handleSave} className='save-button'>Save Class</button>
                 }
                 {
                     (role === 'instructor') &&
