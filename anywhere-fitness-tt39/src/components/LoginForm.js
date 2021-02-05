@@ -2,62 +2,73 @@ import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
 import styled from 'styled-components'
 import schema from '../validation/loginFormSchema'
-import { connect } from 'react-redux';
-import { postLogin } from '../actions/index';
+import { connect } from 'react-redux'
+import { postLogin } from '../actions/index'
+import { Form } from 'react-bootstrap'
 
 const StyledDiv = styled.div`
-  box-sizing: border-box;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column wrap;
   align-items: center;
-  font-family: monospace;
-`
-
-const StyledErr = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  color: red;
-  font-family: monospace;
-  font-size: 0.8rem;
-`
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: flex-end;
-  border: 3px solid cadetblue;
-  box-shadow: 4px 4px 2px lightblue;
-  border-radius: 45px;
-  padding: 2%;
-  input {
-    margin: 1.5% 0 1.5%;
-    &::selection {
-      color: deepskyblue;
-    }
-  }
-  label {
-    &::selection {
-      color: deepskyblue;
+  text-align: center;
+  max-width: 40%;
+  Button {
+    transition: 0.5s all ease-in-out;
+    align-items: center;
+    border-radius: 20px;
+    color: white;
+    background-color: #fd5549;
+    &:hover {
+      transform: scale(1.1);
     }
   }
 `
 
-const StyledBtn = styled.button`
-  padding: 0 5% 0;
-  background-color: white;
-  color: black;
-  border: 2px solid lightcoral;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: 0.4s all ease-in-out;
-  &:hover {
-    color: whitesmoke;
-    background-color: lightcoral;
-  }
-  &::selection {
-    color: deepskyblue;
-  }
-`
+// const StyledErr = styled.div`
+//   display: flex;
+//   flex-flow: column nowrap;
+//   color: red;
+//   font-family: monospace;
+//   font-size: 0.8rem;
+// `
+
+// const StyledForm = styled.form`
+//   display: flex;
+//   flex-flow: column nowrap;
+//   align-items: flex-end;
+//   border: 3px solid cadetblue;
+//   box-shadow: 4px 4px 2px lightblue;
+//   border-radius: 45px;
+//   padding: 2%;
+//   input {
+//     margin: 1.5% 0 1.5%;
+//     &::selection {
+//       color: deepskyblue;
+//     }
+//   }
+//   label {
+//     &::selection {
+//       color: deepskyblue;
+//     }
+//   }
+// `
+
+// const StyledBtn = styled.button`
+//   padding: 0 5% 0;
+//   background-color: white;
+//   color: black;
+//   border: 2px solid lightcoral;
+//   border-radius: 10px;
+//   font-weight: bold;
+//   transition: 0.4s all ease-in-out;
+//   &:hover {
+//     color: whitesmoke;
+//     background-color: lightcoral;
+//   }
+//   &::selection {
+//     color: deepskyblue;
+//   }
+// `
 
 const initialValues = {
   username: '',
@@ -75,13 +86,13 @@ function LoginForm(props) {
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   useEffect(() => {
-    if (props.role === 'client'){
+    if (props.role === 'client') {
       props.push('/user')
-    } else if (props.role === 'instructor'){
+    } else if (props.role === 'instructor') {
       props.push('/instructor')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[props.role])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.role])
 
   const validate = (inputName, inputValue) => {
     yup
@@ -126,34 +137,40 @@ function LoginForm(props) {
   }, [formValues])
   return (
     <StyledDiv>
-      <StyledErr>
-        <div>{errors.username}</div>
-        <div>{errors.password}</div>
-      </StyledErr>
-      <StyledForm onSubmit={onSubmit}>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formValues.username}
-            onChange={onChange}
-            placeholder="Min. 4 chars"
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formValues.password}
-            onChange={onChange}
-          />
-        </label>
-        <StyledBtn disabled={buttonDisabled}>Enter</StyledBtn>
-      </StyledForm>
+      <Form onSubmit={onSubmit}>
+        <Form.Group onSubmit={onSubmit}>
+          <Form.Row>
+            <label htmlFor="username">
+              Username:
+              <input
+                type="text"
+                name="username"
+                value={formValues.username}
+                onChange={onChange}
+                placeholder="Min. 4 chars"
+              />
+            </label>
+          </Form.Row>
+          <Form.Row>
+            <label htmlFor="password">
+              Password:
+              <input
+                type="password"
+                name="password"
+                value={formValues.password}
+                onChange={onChange}
+              />
+            </label>
+          </Form.Row>
+          <button disabled={buttonDisabled}>Log In</button>
+        </Form.Group>
+      </Form>
+      <div>
+        <span>{errors.username}</span>
+        <span>{errors.password}</span>
+      </div>
     </StyledDiv>
   )
 }
 
-export default connect(null, { postLogin })(LoginForm);
+export default connect(null, { postLogin })(LoginForm)

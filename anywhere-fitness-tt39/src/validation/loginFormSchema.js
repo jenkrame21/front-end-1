@@ -2,7 +2,7 @@ import * as yup from 'yup'
 
 export default yup.object().shape({
   username: yup.string()
-    .required('Must include username')
+    .required('Must include username.')
     .min(4, 'Username must be at least four characters long.'),
   password: yup.string()
     .required('Password is required.')
